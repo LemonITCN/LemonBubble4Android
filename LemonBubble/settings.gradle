@@ -1,1 +1,1 @@
-include ':app', ':lemonbubble'
+include ':lemonbubble-samples', ':lemonbubble'
