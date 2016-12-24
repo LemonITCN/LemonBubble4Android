@@ -30,6 +30,8 @@ public class LemonBubbleView {
     private View _backMaskView;
     // 包含弹出框真正内容的小布局面板
     private RelativeLayout _contentPanel;
+    // 动画和帧图片显示的控件
+    private LemonBubblePaintView _paintView;
 
     // 用于存储单例对象的变量
     private static LemonBubbleView _defaultBubbleViewObject;
@@ -127,19 +129,24 @@ public class LemonBubbleView {
      * 初始化公共的控件
      */
     private void initCommonView() {
-        _backMaskView = new View(_context);// 实例化灰色半透明蒙版控件
+        // 实例化灰色半透明蒙版控件
+        _backMaskView = new View(_context);
         // 设置全屏宽
         setSize(_backMaskView, _PST.screenWidthDp() + 1, _PST.screenHeightDp() + 1);// 为了防止强转导致的屏幕宽度缺失一小部分而+1
         // 设置半透明黑色
         _backMaskView.setBackgroundColor(Color.argb(100, 0, 0, 0));
-//        _rootLayout.setAlpha(0);// 设置全透明，也就是默认不可见，后期通过动画改变来显示
+        // _rootLayout.setAlpha(0);// 设置全透明，也就是默认不可见，后期通过动画改变来显示
 
-        _contentPanel = new RelativeLayout(_context);// 实例化内容面板控件
+        // 实例化内容面板控件
+        _contentPanel = new RelativeLayout(_context);
 
+        // 实例化绘图动画和帧图片显示的控件
+        _paintView = new LemonBubblePaintView(_context);
 
         // 把所有控件添加到根视图上
         _rootLayout.addView(_backMaskView);// 半透明灰色背景
         _rootLayout.addView(_contentPanel);// 主内容面板
+        _contentPanel.addView(_paintView);// 动画和帧图标显示控件放置到内容面板上
     }
 
     /**
@@ -148,11 +155,20 @@ public class LemonBubbleView {
      * @param info 泡泡信息对象
      */
     private void initContentPanel(LemonBubbleInfo info) {
+        // 初始化主内容面板的相关属性
         _contentPanel.setBackgroundColor(Color.WHITE);
         setSize(_contentPanel, _DP(100), _DP(100));
         setLocation(_contentPanel,
                 _PST.dpToPx((_PST.screenWidthDp() - _DP(100)) / 2),
                 _PST.dpToPx((_PST.screenHeightDp() - _DP(100)) / 2));
+
+        // 初始化绘图动画与帧图片展示的控件的相关属性
+        _paintView.setBubbleInfo(info);// 传入泡泡信息对象
+        setSize(_paintView, _DP(50), _DP(50));
+        setLocation(_paintView,
+                _PST.dpToPx((_DP(100) - _DP(50)) / 2),
+                _PST.dpToPx((_DP(100) - _DP(50)) / 2));
+
     }
 
     public void showBubbleInfo(LemonBubbleInfo bubbleInfo) {
