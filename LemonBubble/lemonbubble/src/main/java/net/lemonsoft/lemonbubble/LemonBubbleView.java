@@ -2,7 +2,9 @@ package net.lemonsoft.lemonbubble;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -95,6 +97,14 @@ public class LemonBubbleView {
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);// 防止状态栏更新导致界面卡顿
         _container.setContentView(_rootLayout);// 把根视图与对话框相关联
         _container.setCanceledOnTouchOutside(false);// 设置背景点击关闭为true
+        _container.setOnKeyListener(new DialogInterface.OnKeyListener() {// 禁止返回按钮返回
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
+                    return true;
+                else
+                    return false;
+            }
+        });
     }
 
     private int _DP(int dpValue) {
