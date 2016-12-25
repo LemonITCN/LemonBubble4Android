@@ -25,6 +25,8 @@ public class LemonBubbleView {
     private Context _context;
     // 对LemonBubblePrivateSizeTool的名称缩短变量，此变量仅为了让名称变短，代码整洁
     private LemonBubblePrivateSizeTool _PST = LemonBubblePrivateSizeTool.getPrivateSizeTool();
+    // 对LemonBubblePrivateAnimationTool的名称缩短变量，此变量仅为了让名称变短，代码整洁
+    private LemonBubblePrivateAnimationTool _PAT = LemonBubblePrivateAnimationTool.defaultPrivateAnimationTool();
 
     // 当前正在显示的泡泡控件的信息对象
     private LemonBubbleInfo _currentBubbleInfo;
@@ -112,37 +114,13 @@ public class LemonBubbleView {
     }
 
     /**
-     * 对指定的控件设置尺寸大小
-     *
-     * @param view     要设置尺寸的控件
-     * @param widthDp  宽度，单位dp
-     * @param heightDp 高度，单位dp
-     */
-    private void setSize(View view, int widthDp, int heightDp) {
-        view.setLayoutParams(
-                new RelativeLayout.LayoutParams(_DP(widthDp), _DP(heightDp)));
-    }
-
-    /**
-     * 设置控件的位置
-     *
-     * @param view 要设置位置的控件对象
-     * @param x    水平x坐标
-     * @param y    垂直y坐标
-     */
-    private void setLocation(View view, int x, int y) {
-        view.setX(x);
-        view.setY(y);
-    }
-
-    /**
      * 初始化公共的控件
      */
     private void initCommonView() {
         // 实例化灰色半透明蒙版控件
         _backMaskView = new View(_context);
         // 设置全屏宽
-        setSize(_backMaskView, _PST.screenWidthDp() + 1, _PST.screenHeightDp() + 1);// 为了防止强转导致的屏幕宽度缺失一小部分而+1
+        _PAT.setSize(_backMaskView, _PST.screenWidthDp() + 1, _PST.screenHeightDp() + 1);// 为了防止强转导致的屏幕宽度缺失一小部分而+1
         // 设置半透明黑色
         _backMaskView.setBackgroundColor(Color.argb(100, 0, 0, 0));
         // _rootLayout.setAlpha(0);// 设置全透明，也就是默认不可见，后期通过动画改变来显示
@@ -167,15 +145,15 @@ public class LemonBubbleView {
     private void initContentPanel(LemonBubbleInfo info) {
         // 初始化主内容面板的相关属性
         _contentPanel.setBackgroundColor(Color.WHITE);
-        setSize(_contentPanel, _DP(100), _DP(100));
-        setLocation(_contentPanel,
+        _PAT.setSize(_contentPanel, _DP(100), _DP(100));
+        _PAT.setLocation(_contentPanel,
                 _PST.dpToPx((_PST.screenWidthDp() - _DP(100)) / 2),
                 _PST.dpToPx((_PST.screenHeightDp() - _DP(100)) / 2));
 
         // 初始化绘图动画与帧图片展示的控件的相关属性
         _paintView.setBubbleInfo(info);// 传入泡泡信息对象
-        setSize(_paintView, _DP(50), _DP(50));
-        setLocation(_paintView,
+        _PAT.setSize(_paintView, _DP(50), _DP(50));
+        _PAT.setLocation(_paintView,
                 _PST.dpToPx((_DP(100) - _DP(50)) / 2),
                 _PST.dpToPx((_DP(100) - _DP(50)) / 2));
 

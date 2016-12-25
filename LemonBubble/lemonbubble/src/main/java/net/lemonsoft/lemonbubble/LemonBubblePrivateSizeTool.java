@@ -6,23 +6,25 @@ import android.view.WindowManager;
 
 /**
  * LemonBubble内私有使用的尺寸工具类
+ * 开发者，请你不要在你的项目中尝试调用此类中的方法，你可以在LemonKit中找到更适合你的替代品
+ * https://github.com/1em0nsOft/LemonKit4Android
  * Created by LiuRi on 2016/12/23.
  */
 
-public class LemonBubblePrivateSizeTool {
+class LemonBubblePrivateSizeTool {
 
     private float _density;
     private DisplayMetrics _metrics;
 
     private static LemonBubblePrivateSizeTool _privateSizeTool;
 
-    public static LemonBubblePrivateSizeTool getPrivateSizeTool() {
+    static synchronized LemonBubblePrivateSizeTool getPrivateSizeTool() {
         if (_privateSizeTool == null)
             _privateSizeTool = new LemonBubblePrivateSizeTool();
         return _privateSizeTool;
     }
 
-    protected void setContext(Context context) {
+    void setContext(Context context) {
         _density = context.getResources().getDisplayMetrics().density;
         _metrics = new DisplayMetrics();
         ((WindowManager) (context.getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getMetrics(_metrics);
@@ -34,7 +36,7 @@ public class LemonBubblePrivateSizeTool {
      * @param dpValue dp的数值
      * @return 对应的px数值
      */
-    protected int dpToPx(int dpValue) {
+    int dpToPx(int dpValue) {
         return (int) (_density * dpValue + 0.5f);
     }
 
@@ -44,7 +46,7 @@ public class LemonBubblePrivateSizeTool {
      * @param pxValue px的数值
      * @return 对应的dp数值
      */
-    protected int pxToDp(int pxValue) {
+    int pxToDp(int pxValue) {
         return (int) (pxValue / _density + 0.5f);
     }
 
@@ -53,7 +55,7 @@ public class LemonBubblePrivateSizeTool {
      *
      * @return 屏幕宽度dp值
      */
-    protected int screenWidthDp() {
+    int screenWidthDp() {
         return pxToDp(_metrics.widthPixels);
     }
 
@@ -62,7 +64,7 @@ public class LemonBubblePrivateSizeTool {
      *
      * @return 屏幕高度的dp值
      */
-    protected int screenHeightDp() {
+    int screenHeightDp() {
         return pxToDp(_metrics.heightPixels);
     }
 
