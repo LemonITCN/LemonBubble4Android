@@ -136,10 +136,12 @@ public class LemonBubbleView {
 
         // 实例化绘图动画和帧图片显示的控件
         _paintView = new LemonBubblePaintView(_context);
+        _paintView.setBackgroundColor(Color.RED);
 
         // 实例化标题显示标签控件
         _titleView = new TextView(_context);
         _titleView.setGravity(Gravity.CENTER);
+        _titleView.setBackgroundColor(Color.BLUE);
 
         // 把所有控件添加到根视图上
         _rootLayout.addView(_backMaskView);// 半透明灰色背景

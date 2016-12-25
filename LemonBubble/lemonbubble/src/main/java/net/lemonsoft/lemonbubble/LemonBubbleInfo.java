@@ -3,6 +3,7 @@ package net.lemonsoft.lemonbubble;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,15 +29,15 @@ public class LemonBubbleInfo {
     /**
      * 泡泡控件的宽
      */
-    private int bubbleWidth;
+    private int bubbleWidth = 180;
     /**
      * 泡泡控件的高
      */
-    private int bubbleHeight;
+    private int bubbleHeight = 140;
     /**
      * 泡泡控件的圆角半径
      */
-    private int cornerRadius;
+    private int cornerRadius = 8;
     /**
      * 图文布局属性
      */
@@ -112,10 +113,6 @@ public class LemonBubbleInfo {
 
     public LemonBubbleInfo(Context context) {
         _PST.setContext(context);
-        bubbleWidth = 180;
-        bubbleHeight = 120;
-        cornerRadius = 3;
-        System.out.println("hello nihao");
     }
 
     public String getTitle() {
@@ -298,18 +295,37 @@ public class LemonBubbleInfo {
     void calBubbleViewContentPanelFrame(View view) {
         int y = 0;
         switch (locationStyle) {
-            case CENTER:
-                y = (int) ((_PST.screenHeightDp() - bubbleHeight) / 2.0);
+            case CENTER:// 当控件设置属性为屏幕居中的时候
+                y = (int) ((_PST.screenHeightDp() - bubbleHeight) / 2.0);// 计算屏幕居中
                 break;
-            case BOTTOM:
+            case BOTTOM:// 当位置属性设置为在屏幕底部的时候
                 y = _PST.screenHeightDp() - bubbleHeight;
         }
         y += (locationStyle != LemonBubbleLocationStyle.BOTTOM ? 1 : -1) *
-                (proportionOfDeviation * _PST.screenHeightDp());
+                (proportionOfDeviation * _PST.screenHeightDp());// 根据当前的位置属性 是上面还是中间还是下面判断便宜方向并加上偏移的值
+        // 应用位置
         _PAT.setLocation(view, (int) ((_PST.screenWidthDp() - bubbleWidth) / 2.0), y);
+        // 应用尺寸
         _PAT.setSize(view, bubbleWidth, bubbleHeight);
     }
 
+    /**
+     * 获取指定的textV的行高
+     *
+     * @param textView 要获取的textView的行高
+     * @return textView的每行的高度
+     */
+    int getTitleHeight(TextView textView) {
+        Paint.FontMetrics fontMetrics = textView.getPaint().getFontMetrics();
+        return _PST.pxToDp((int) (fontMetrics.descent - fontMetrics.ascent));
+    }
+
+    /**
+     * 计算泡泡控件中的图标和标题控件的位置和大小，并进行应用赋值
+     *
+     * @param paintView 图标和动画显示内容控件
+     * @param titleView 标题标签控件
+     */
     void calPaintViewAndTitleViewFrame(LemonBubblePaintView paintView, TextView titleView) {
         int bubbleContentWidth = (int) (bubbleWidth * (1 - proportionOfPaddingX * 2));
         int bubbleContentHeight = (int) (bubbleHeight * (1 - proportionOfPaddingY * 2));
@@ -321,7 +337,7 @@ public class LemonBubbleInfo {
                 layoutStyle == LemonBubbleLayoutStyle.TITLE_ONLY) ?
                 bubbleContentWidth :
                 bubbleContentWidth * (1 - proportionOfSpace - iconWidth));
-        int titleHeight = _DP(titleFontSize);
+        int titleHeight = titleFontSize;
         int iconX, titleX, iconY, titleY;
         iconX = titleX = baseX;
         iconY = titleY = baseY;
@@ -329,10 +345,11 @@ public class LemonBubbleInfo {
 
         switch (layoutStyle) {
             case ICON_TOP_TITLE_BOTTOM: {
+                titleView.setTextSize(titleFontSize);
                 titleView.setLayoutParams(new RelativeLayout.LayoutParams(_DP(bubbleContentWidth),
                         RelativeLayout.LayoutParams.WRAP_CONTENT));
                 titleView.postInvalidate();// 即时刷新
-                int contentHeight = (int) (iconWidth + bubbleContentHeight * proportionOfSpace + titleView.getMeasuredHeight());
+                int contentHeight = (int) (iconWidth + bubbleContentHeight * proportionOfSpace + getTitleHeight(titleView));
                 iconX = baseX + (bubbleContentWidth - iconWidth) / 2;
                 iconY = baseY + (bubbleContentHeight - contentHeight) / 2;
                 titleY = (int) (iconY + iconWidth + bubbleContentHeight * proportionOfSpace);
