@@ -1,5 +1,6 @@
 package net.lemonsoft.lemonbubble;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.view.View;
@@ -27,15 +28,15 @@ public class LemonBubbleInfo {
     /**
      * 泡泡控件的宽
      */
-    private int bubbleWidth = _DP(180);
+    private int bubbleWidth;
     /**
      * 泡泡控件的高
      */
-    private int bubbleHeight = _DP(100);
+    private int bubbleHeight;
     /**
      * 泡泡控件的圆角半径
      */
-    private int cornerRadius = _DP(8);
+    private int cornerRadius;
     /**
      * 图文布局属性
      */
@@ -57,7 +58,7 @@ public class LemonBubbleInfo {
      */
     private String title = "LemonBubble";
     /**
-     * 帧动画时间间隔
+     * 帧动画时间间隔，单位ms
      */
     private int frameAnimationTime = 100;
     /**
@@ -99,15 +100,23 @@ public class LemonBubbleInfo {
     /**
      * 图标渲染色
      */
-    private int iconColor = Color.parseColor("72a541");
+    private int iconColor = Color.BLACK;
     /**
      * 标题文字颜色
      */
-    private int titleColor = Color.parseColor("72a541");
+    private int titleColor = Color.BLACK;
     /**
      * 标题字体大小
      */
     private int titleFontSize = 13;
+
+    public LemonBubbleInfo(Context context) {
+        _PST.setContext(context);
+        bubbleWidth = 180;
+        bubbleHeight = 120;
+        cornerRadius = 3;
+        System.out.println("hello nihao");
+    }
 
     public String getTitle() {
         return title;
@@ -286,7 +295,7 @@ public class LemonBubbleInfo {
      *
      * @param view 泡泡控件中的内容信息面板控件
      */
-    protected void calBubbleViewContentPanelFrame(View view) {
+    void calBubbleViewContentPanelFrame(View view) {
         int y = 0;
         switch (locationStyle) {
             case CENTER:
@@ -295,13 +304,13 @@ public class LemonBubbleInfo {
             case BOTTOM:
                 y = _PST.screenHeightDp() - bubbleHeight;
         }
-        y += (locationStyle != LemonBubbleLocationStyle.BOTTOM ? _DP(1) : -1) *
+        y += (locationStyle != LemonBubbleLocationStyle.BOTTOM ? 1 : -1) *
                 (proportionOfDeviation * _PST.screenHeightDp());
         _PAT.setLocation(view, (int) ((_PST.screenWidthDp() - bubbleWidth) / 2.0), y);
         _PAT.setSize(view, bubbleWidth, bubbleHeight);
     }
 
-    protected void calPaintViewAndTitleViewFrame(LemonBubblePaintView paintView, TextView titleView) {
+    void calPaintViewAndTitleViewFrame(LemonBubblePaintView paintView, TextView titleView) {
         int bubbleContentWidth = (int) (bubbleWidth * (1 - proportionOfPaddingX * 2));
         int bubbleContentHeight = (int) (bubbleHeight * (1 - proportionOfPaddingY * 2));
         int iconWidth = (int) (layoutStyle == LemonBubbleLayoutStyle.TITLE_ONLY ? 0 : bubbleContentHeight * proportionOfIcon);
@@ -360,7 +369,7 @@ public class LemonBubbleInfo {
                 titleX = (int) (baseX + (bubbleContentWidth - contentWidth) / 2.0);
                 titleY = (int) (baseY + (bubbleContentHeight - iconWidth) / 2.0);
                 iconX = (int) (titleX + titleView.getMeasuredWidth() + bubbleContentWidth * proportionOfSpace);
-                iconY = (int) (baseY + (bubbleContentHeight - iconWidth) / 2);
+                iconY = (int) (baseY + (bubbleContentHeight - iconWidth) / 2.0);
                 break;
             }
             case ICON_ONLY: {

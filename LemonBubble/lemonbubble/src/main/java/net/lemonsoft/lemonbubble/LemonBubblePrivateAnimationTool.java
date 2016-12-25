@@ -44,7 +44,7 @@ class LemonBubblePrivateAnimationTool {
      * @param y    垂直y坐标
      */
     void setLocation(View view, int x, int y) {
-        view.setX(x);
-        view.setY(y);
+        view.setX(_DP(x));
+        view.setY(_DP(y));
     }
 }

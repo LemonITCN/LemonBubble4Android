@@ -4,11 +4,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * 柠檬泡泡控件
@@ -36,6 +38,10 @@ public class LemonBubbleView {
     private RelativeLayout _contentPanel;
     // 动画和帧图片显示的控件
     private LemonBubblePaintView _paintView;
+    // 标题显示标签控件
+    private TextView _titleView;
+    // 记录连环动画当前播放的帧索引的变量
+    private int _frameAnimationPlayIndex;
 
     // 用于存储单例对象的变量
     private static LemonBubbleView _defaultBubbleViewObject;
@@ -131,10 +137,15 @@ public class LemonBubbleView {
         // 实例化绘图动画和帧图片显示的控件
         _paintView = new LemonBubblePaintView(_context);
 
+        // 实例化标题显示标签控件
+        _titleView = new TextView(_context);
+        _titleView.setGravity(Gravity.CENTER);
+
         // 把所有控件添加到根视图上
         _rootLayout.addView(_backMaskView);// 半透明灰色背景
         _rootLayout.addView(_contentPanel);// 主内容面板
         _contentPanel.addView(_paintView);// 动画和帧图标显示控件放置到内容面板上
+        _contentPanel.addView(_titleView);// 标题显示标签控件放置到内容面板上
     }
 
     /**
@@ -143,20 +154,21 @@ public class LemonBubbleView {
      * @param info 泡泡信息对象
      */
     private void initContentPanel(LemonBubbleInfo info) {
+        if (info.getIconArray() == null || info.getIconArray().size() == 0) {
+            // 显示自定义动画
+
+        } else if (info.getIconArray().size() == 1) {
+            // 显示单张图片
+        } else {
+            // 逐帧连环动画
+        }
         // 初始化主内容面板的相关属性
         _contentPanel.setBackgroundColor(Color.WHITE);
-        _PAT.setSize(_contentPanel, _DP(100), _DP(100));
-        _PAT.setLocation(_contentPanel,
-                _PST.dpToPx((_PST.screenWidthDp() - _DP(100)) / 2),
-                _PST.dpToPx((_PST.screenHeightDp() - _DP(100)) / 2));
+        info.calBubbleViewContentPanelFrame(_contentPanel);
+        info.calPaintViewAndTitleViewFrame(_paintView, _titleView);
 
         // 初始化绘图动画与帧图片展示的控件的相关属性
         _paintView.setBubbleInfo(info);// 传入泡泡信息对象
-        _PAT.setSize(_paintView, _DP(50), _DP(50));
-        _PAT.setLocation(_paintView,
-                _PST.dpToPx((_DP(100) - _DP(50)) / 2),
-                _PST.dpToPx((_DP(100) - _DP(50)) / 2));
-
     }
 
     public void showBubbleInfo(LemonBubbleInfo bubbleInfo) {
@@ -164,7 +176,6 @@ public class LemonBubbleView {
         initCommonView();// 初始化公共的控件
         initContentPanel(bubbleInfo);// 根据泡泡信息对象对正文内容面板进行初始化
         _container.show();
-
     }
 
 }
