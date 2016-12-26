@@ -40,12 +40,24 @@ public class LemonBubbleView {
     private LemonBubblePaintView _paintView;
     // 标题显示标签控件
     private TextView _titleView;
+    // 当前是否被显示状态
+    private boolean _isShow;
     // 记录连环动画当前播放的帧索引的变量
     private int _frameAnimationPlayIndex;
 
+    // 是否已经初始化过了，避免重新创建控件
+    private boolean haveInit = false;
+
     // 用于存储单例对象的变量
     private static LemonBubbleView _defaultBubbleViewObject;
-    private static Context _defaultContext;
+
+    public boolean isShow() {
+        return _isShow;
+    }
+
+    public synchronized void setIsShow(boolean isShow) {
+        this._isShow = isShow;
+    }
 
     /**
      * 获取单例泡泡控件对象
@@ -54,7 +66,7 @@ public class LemonBubbleView {
      */
     public static LemonBubbleView defaultBubbleView(Context context) {
         if (_defaultBubbleViewObject == null)
-            _defaultBubbleViewObject = new LemonBubbleView(context);
+            _defaultBubbleViewObject = new LemonBubbleView();
         return _defaultBubbleViewObject;
     }
 
@@ -63,28 +75,26 @@ public class LemonBubbleView {
      *
      * @return 单例泡泡控件实例对象
      */
-    public static LemonBubbleView defaultBubbleView() {
+    public static synchronized LemonBubbleView defaultBubbleView() {
         if (_defaultBubbleViewObject == null) {
-            if (_defaultContext == null) {
-                new Exception("Default _context not found!").printStackTrace();
-                return null;
-            } else
-                _defaultBubbleViewObject = new LemonBubbleView(_defaultContext);
+            _defaultBubbleViewObject = new LemonBubbleView();
         }
         return _defaultBubbleViewObject;
     }
 
-    public static void set_defaultContext(Context _defaultContext) {
-        LemonBubbleView._defaultContext = _defaultContext;
-    }
-
-    private LemonBubbleView() {
-    }
-
-    public LemonBubbleView(Context context) {
+    /**
+     * 自动初始化
+     *
+     * @param context 上下文对象
+     */
+    private void autoInit(Context context) {
         _context = context;
         _PST.setContext(context);// 初始化尺寸工具类
-        initContainerAndRootLayout();
+        if (!haveInit) {
+            initContainerAndRootLayout();// 初始化容器和根视图
+            initCommonView();// 初始化公共的控件
+            haveInit = true;
+        }
     }
 
     /**
@@ -107,16 +117,9 @@ public class LemonBubbleView {
         _container.setCanceledOnTouchOutside(false);// 设置背景点击关闭为true
         _container.setOnKeyListener(new DialogInterface.OnKeyListener() {// 禁止返回按钮返回
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
-                    return true;
-                else
-                    return false;
+                return keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0;
             }
         });
-    }
-
-    private int _DP(int dpValue) {
-        return _PST.dpToPx(dpValue);
     }
 
     /**
@@ -136,12 +139,10 @@ public class LemonBubbleView {
 
         // 实例化绘图动画和帧图片显示的控件
         _paintView = new LemonBubblePaintView(_context);
-        _paintView.setBackgroundColor(Color.RED);
 
         // 实例化标题显示标签控件
         _titleView = new TextView(_context);
         _titleView.setGravity(Gravity.CENTER);
-        _titleView.setBackgroundColor(Color.BLUE);
 
         // 把所有控件添加到根视图上
         _rootLayout.addView(_backMaskView);// 半透明灰色背景
@@ -158,7 +159,7 @@ public class LemonBubbleView {
     private void initContentPanel(LemonBubbleInfo info) {
         if (info.getIconArray() == null || info.getIconArray().size() == 0) {
             // 显示自定义动画
-
+            _paintView.setBubbleInfo(info);
         } else if (info.getIconArray().size() == 1) {
             // 显示单张图片
         } else {
@@ -168,16 +169,21 @@ public class LemonBubbleView {
         _contentPanel.setBackgroundColor(Color.WHITE);
         info.calBubbleViewContentPanelFrame(_contentPanel);
         info.calPaintViewAndTitleViewFrame(_paintView, _titleView);
-
-        // 初始化绘图动画与帧图片展示的控件的相关属性
-        _paintView.setBubbleInfo(info);// 传入泡泡信息对象
     }
 
-    public void showBubbleInfo(LemonBubbleInfo bubbleInfo) {
+    /**
+     * 展示泡泡控件
+     *
+     * @param context    上下文对象
+     * @param bubbleInfo 泡泡信息描述对象
+     */
+    public void showBubbleInfo(Context context, LemonBubbleInfo bubbleInfo) {
+        autoInit(context);
         _currentBubbleInfo = bubbleInfo;// 现将泡泡信息对象保存起来
-        initCommonView();// 初始化公共的控件
+        if (!isShow())// 如果已经显示，就不进行再弹出新的层
+            _container.show();
+        setIsShow(true);// 保存当前状态为已显示
         initContentPanel(bubbleInfo);// 根据泡泡信息对象对正文内容面板进行初始化
-        _container.show();
     }
 
 }

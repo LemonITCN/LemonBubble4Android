@@ -1,6 +1,5 @@
 package net.lemonsoft.lemonbubble;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -111,10 +110,6 @@ public class LemonBubbleInfo {
      */
     private int titleFontSize = 13;
 
-    public LemonBubbleInfo(Context context) {
-        _PST.setContext(context);
-    }
-
     public String getTitle() {
         return title;
     }
@@ -137,6 +132,11 @@ public class LemonBubbleInfo {
 
     public void setBubbleHeight(int bubbleHeight) {
         this.bubbleHeight = bubbleHeight;
+    }
+
+    public void setBubbleSize(int width, int height) {
+        setBubbleWidth(width);
+        setBubbleHeight(height);
     }
 
     public int getCornerRadius() {
@@ -317,7 +317,17 @@ public class LemonBubbleInfo {
      */
     int getTitleHeight(TextView textView) {
         Paint.FontMetrics fontMetrics = textView.getPaint().getFontMetrics();
-        return _PST.pxToDp((int) (fontMetrics.descent - fontMetrics.ascent));
+        return _PST.pxToDp((int) (fontMetrics.descent - fontMetrics.top)) + 2;
+    }
+
+    /**
+     * 获取textView的文字宽
+     *
+     * @param textView 要查询文字宽的标签控件
+     * @return 获取到的文字宽度数值
+     */
+    int getTitleWidth(TextView textView) {
+        return _PST.pxToDp((int) (textView.getPaint().measureText(textView.getText().toString())));
     }
 
     /**
@@ -337,55 +347,59 @@ public class LemonBubbleInfo {
                 layoutStyle == LemonBubbleLayoutStyle.TITLE_ONLY) ?
                 bubbleContentWidth :
                 bubbleContentWidth * (1 - proportionOfSpace - iconWidth));
-        int titleHeight = titleFontSize;
+        int titleHeight = 0;
         int iconX, titleX, iconY, titleY;
         iconX = titleX = baseX;
         iconY = titleY = baseY;
-        titleView.setText(title);
+        titleView.setText(title);// 应用设置的标题文字
+        titleView.setTextSize(titleFontSize);// 应用预先设置的字体
 
         switch (layoutStyle) {
-            case ICON_TOP_TITLE_BOTTOM: {
-                titleView.setTextSize(titleFontSize);
+            case ICON_TOP_TITLE_BOTTOM: {// 图上文下
                 titleView.setLayoutParams(new RelativeLayout.LayoutParams(_DP(bubbleContentWidth),
                         RelativeLayout.LayoutParams.WRAP_CONTENT));
                 titleView.postInvalidate();// 即时刷新
-                int contentHeight = (int) (iconWidth + bubbleContentHeight * proportionOfSpace + getTitleHeight(titleView));
+                titleHeight = getTitleHeight(titleView);
+                int contentHeight = (int) (iconWidth + bubbleContentHeight * proportionOfSpace + titleHeight);
                 iconX = baseX + (bubbleContentWidth - iconWidth) / 2;
                 iconY = baseY + (bubbleContentHeight - contentHeight) / 2;
                 titleY = (int) (iconY + iconWidth + bubbleContentHeight * proportionOfSpace);
                 titleX = (int) ((baseX) + (bubbleContentWidth - titleWidth) / 2.0);
                 break;
             }
-            case ICON_BOTTOM_TITLE_TOP: {
+            case ICON_BOTTOM_TITLE_TOP: {// 图下文上
                 titleView.setLayoutParams(new RelativeLayout.LayoutParams(_DP(bubbleContentWidth),
                         RelativeLayout.LayoutParams.WRAP_CONTENT));
                 titleView.postInvalidate();// 即时刷新
-                int contentHeight = (int) (iconWidth + bubbleContentHeight * proportionOfSpace + titleView.getMeasuredHeight());
+                titleHeight = getTitleHeight(titleView);
+                int contentHeight = (int) (iconWidth + bubbleContentHeight * proportionOfSpace + titleHeight);
                 titleY = (int) (baseY + (bubbleContentHeight - contentHeight) / 2.0);
                 titleX = (int) (baseX + (bubbleContentWidth - titleWidth) / 2.0);
                 iconX = (int) (baseX + (bubbleContentWidth - iconWidth) / 2.0);
-                iconY = (int) (titleY + titleView.getMeasuredHeight() + bubbleContentHeight * proportionOfSpace);
+                iconY = (int) (titleY + titleHeight + bubbleContentHeight * proportionOfSpace);
                 break;
             }
-            case ICON_LEFT_TITLE_RIGHT: {
+            case ICON_LEFT_TITLE_RIGHT: {// 图左文右
                 titleView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT));
                 titleView.postInvalidate();// 即时刷新
-                int contentWidth = (int) (iconWidth + bubbleContentWidth * proportionOfSpace + titleView.getMeasuredWidth());
+                titleHeight = getTitleHeight(titleView);
+                int contentWidth = (int) (iconWidth + bubbleContentWidth * proportionOfSpace + getTitleWidth(titleView));
                 iconX = (int) (baseX + (bubbleContentWidth - contentWidth) / 2.0);
                 iconY = (int) (baseY + (bubbleContentHeight - iconWidth) / 2.0);
                 titleX = (int) (iconX + iconWidth + bubbleContentWidth * proportionOfSpace);
                 titleY = (int) (baseY + (bubbleContentHeight - titleHeight) / 2.0);
                 break;
             }
-            case ICON_RIGHT_TITLE_LEFT: {
+            case ICON_RIGHT_TITLE_LEFT: {// 图右文左
                 titleView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT));
                 titleView.postInvalidate();// 即时刷新
-                int contentWidth = (int) (iconWidth + bubbleContentWidth * proportionOfSpace + titleView.getMeasuredWidth());
+                titleHeight = getTitleHeight(titleView);
+                int contentWidth = (int) (iconWidth + bubbleContentWidth * proportionOfSpace + getTitleWidth(titleView));
                 titleX = (int) (baseX + (bubbleContentWidth - contentWidth) / 2.0);
-                titleY = (int) (baseY + (bubbleContentHeight - iconWidth) / 2.0);
-                iconX = (int) (titleX + titleView.getMeasuredWidth() + bubbleContentWidth * proportionOfSpace);
+                titleY = (int) (baseY + (bubbleContentHeight - titleHeight) / 2.0);
+                iconX = (int) (titleX + getTitleWidth(titleView) + bubbleContentWidth * proportionOfSpace);
                 iconY = (int) (baseY + (bubbleContentHeight - iconWidth) / 2.0);
                 break;
             }
@@ -399,9 +413,10 @@ public class LemonBubbleInfo {
                 titleView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT));
                 titleView.postInvalidate();// 即时刷新
+                titleHeight = getTitleHeight(titleView);
                 iconX = iconY = iconWidth = 0;
-                titleX = (int) (baseX + (bubbleContentWidth - titleView.getMeasuredWidth()) / 2.0);
-                titleY = (int) (baseY + (bubbleContentHeight - titleView.getMeasuredHeight()) / 2.0);
+                titleX = baseX;
+                titleY = (int) (baseY + (bubbleContentHeight - getTitleHeight(titleView)) / 2.0);
                 break;
             }
         }

@@ -20,7 +20,7 @@ public class LemonBubblePaintView extends ImageView {
     // 动画播放进度存储变量，0-1之间的浮点数
     private float _playProgressValue;
 
-    public LemonBubblePaintView(Context context) {
+    public LemonBubblePaintView(final Context context) {
         super(context);
         _playProgressValueAnimator = ValueAnimator.ofFloat(0, 1);
         _playProgressValueAnimator.setDuration(600);
@@ -34,7 +34,7 @@ public class LemonBubblePaintView extends ImageView {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                _playProgressValueAnimator.start();
+                LemonBubble.showError(context, "支付完了");
             }
         });
     }
