@@ -67,20 +67,25 @@ public class LemonBubble {
      * @return 带有叉号的错误信息的泡泡信息对象
      */
     public static LemonBubbleInfo getErrorBubbleInfo() {
-        LemonBubbleInfo info = new LemonBubbleInfo();
+        final LemonBubbleInfo info = new LemonBubbleInfo();
         info.setLayoutStyle(LemonBubbleLayoutStyle.ICON_LEFT_TITLE_RIGHT);
         info.setLocationStyle(LemonBubbleLocationStyle.BOTTOM);
         info.setProportionOfDeviation(0.01f);
         info.setBubbleSize(180, 80);
+        info.setIconColor(Color.argb(255, 0, 205, 0));
         info.setIconAnimation(new LemonBubblePaintContext() {
             @Override
             public void paint(Canvas canvas, float playProgress) {
+                int aimA = (info.getIconColor() & 0xff000000) >>> 24;
+                int aimR = (info.getIconColor() & 0x00ff0000) >> 16;
+                int aimG = (info.getIconColor() & 0x0000ff00) >> 8;
+                int aimB = (info.getIconColor() & 0x000000ff);
                 Paint paint = new Paint();
                 paint.setStyle(Paint.Style.STROKE);
-                paint.setColor(Color.argb(30, 0, 205, 0));
+                paint.setColor(Color.argb((int) (aimA * 0.1), aimR, aimG, aimB));
                 paint.setStrokeWidth(8);
                 canvas.drawCircle(canvas.getWidth() / 2, canvas.getHeight() / 2, canvas.getWidth() / 2 - 4, paint);
-                paint.setColor(Color.argb(255, 0, 205, 0));
+                paint.setColor(info.getIconColor());
                 Path path = new Path();
                 path.addArc(new RectF(4, 4, canvas.getWidth() - 4, canvas.getHeight() - 4), 67, -225);
                 path.lineTo((float) (canvas.getWidth() * 0.42),

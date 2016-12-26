@@ -92,7 +92,7 @@ public class LemonBubbleInfo {
     /**
      * 蒙版颜色
      */
-    private int maskColor = Color.argb(50, 25, 25, 25);
+    private int maskColor = Color.argb(150, 0, 0, 0);
     /**
      * 泡泡控件的背景色
      */

@@ -1,7 +1,13 @@
 package net.lemonsoft.lemonbubble;
 
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.graphics.Color;
+import android.graphics.RectF;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
+import android.os.Build;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -78,4 +84,79 @@ class LemonBubblePrivateAnimationTool {
         });
         valueAnimator.start();
     }
+
+    /**
+     * 渐变设置透明度
+     *
+     * @param view  设置透明度的控件
+     * @param alpha 透明度的目标值
+     */
+    void setAlpha(final View view, float alpha) {
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(view.getAlpha(), alpha);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                view.setAlpha((float) animation.getAnimatedValue());
+            }
+        });
+        valueAnimator.start();
+    }
+
+    /**
+     * 动画改变背景颜色
+     *
+     * @param view  要改变背景颜色的控件
+     * @param color 要改变成的目标背景颜色
+     */
+    void setBackgroundColor(final View view, int color) {
+        int startColor = Color.argb(0, 255, 255, 255);
+        Drawable drawable = view.getBackground();
+        if (drawable instanceof ColorDrawable)
+            startColor = ((ColorDrawable) drawable).getColor();
+        // 先算出原颜色的ARGB值
+        final int startA = (startColor & 0xff000000) >>> 24;
+        final int startR = (startColor & 0x00ff0000) >> 16;
+        final int startG = (startColor & 0x0000ff00) >> 8;
+        final int startB = (startColor & 0x000000ff);
+        // 算出目标颜色的ARGB值
+        int aimA = (color & 0xff000000) >>> 24;
+        int aimR = (color & 0x00ff0000) >> 16;
+        int aimG = (color & 0x0000ff00) >> 8;
+        int aimB = (color & 0x000000ff);
+        // 算颜色ARGB的差值
+        final int subA = aimA - startA;
+        final int subR = aimR - startR;
+        final int subG = aimG - startG;
+        final int subB = aimB - startB;
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                // 根据进度来修改颜色
+                view.setBackgroundColor(Color.argb((int) (startA + subA * (float) animation.getAnimatedValue()),
+                        (int) (startR + subR * (float) animation.getAnimatedValue()),
+                        (int) (startG + subG * (float) animation.getAnimatedValue()),
+                        (int) (startB + subB * (float) animation.getAnimatedValue())));
+            }
+        });
+        valueAnimator.start();
+    }
+
+    void setCornerRadius(View view, int radius, int color) {
+        int borderLength = 0;
+        float[] outerRadii = new float[8];
+        float[] innerRadii = new float[8];
+        for (int i = 0; i < 8; i++) {
+            outerRadii[i] = radius + borderLength;
+            innerRadii[i] = radius;
+        }
+        ShapeDrawable sd = new ShapeDrawable(new RoundRectShape(outerRadii, new RectF(borderLength, borderLength, borderLength, borderLength), innerRadii));
+        sd.getPaint().setColor(color);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            view.setBackground(sd);
+        } else {
+            view.setBackgroundDrawable(sd);
+        }
+    }
+
 }

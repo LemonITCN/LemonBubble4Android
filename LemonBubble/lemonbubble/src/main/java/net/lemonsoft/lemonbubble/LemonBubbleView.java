@@ -129,13 +129,13 @@ public class LemonBubbleView {
         // 实例化灰色半透明蒙版控件
         _backMaskView = new View(_context);
         // 设置全屏宽
-        _PAT.setSize(_backMaskView, _PST.screenWidthDp() + 1, _PST.screenHeightDp() + 1);// 为了防止强转导致的屏幕宽度缺失一小部分而+1
-        // 设置半透明黑色
-        _backMaskView.setBackgroundColor(Color.argb(100, 0, 0, 0));
-        // _rootLayout.setAlpha(0);// 设置全透明，也就是默认不可见，后期通过动画改变来显示
+        _backMaskView.setLayoutParams(new RelativeLayout.LayoutParams(_PST.dpToPx(_PST.screenWidthDp()), _PST.dpToPx(_PST.screenHeightDp())));
+        _rootLayout.setAlpha(0);// 设置全透明，也就是默认不可见，后期通过动画改变来显示
 
         // 实例化内容面板控件
         _contentPanel = new RelativeLayout(_context);
+        _contentPanel.setX(_PST.dpToPx((int) (_PST.screenWidthDp() / 2.0)));
+        _contentPanel.setY(_PST.dpToPx((int) (_PST.screenHeightDp() / 2.0)));
 
         // 实例化绘图动画和帧图片显示的控件
         _paintView = new LemonBubblePaintView(_context);
@@ -166,9 +166,14 @@ public class LemonBubbleView {
             // 逐帧连环动画
         }
         // 初始化主内容面板的相关属性
+        _PAT.setAlpha(_rootLayout, 255);
         _contentPanel.setBackgroundColor(Color.WHITE);
         info.calBubbleViewContentPanelFrame(_contentPanel);
         info.calPaintViewAndTitleViewFrame(_paintView, _titleView);
+        // 设置蒙版色
+        _PAT.setBackgroundColor(_backMaskView, info.getMaskColor());
+        // 设置内容显示面板的圆角
+        _PAT.setCornerRadius(_contentPanel, _PST.dpToPx(info.getCornerRadius()), info.getBackgroundColor());
     }
 
     /**
