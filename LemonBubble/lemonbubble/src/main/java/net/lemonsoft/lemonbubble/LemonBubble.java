@@ -24,26 +24,36 @@ public class LemonBubble {
      * @return 带有对号的泡泡信息对象
      */
     public static LemonBubbleInfo getRightBubbleInfo() {
-        LemonBubbleInfo info = new LemonBubbleInfo();
+        final LemonBubbleInfo info = new LemonBubbleInfo();
         info.setLayoutStyle(LemonBubbleLayoutStyle.ICON_TOP_TITLE_BOTTOM);
+        info.setIconColor(Color.argb(255, 0, 205, 0));
         info.setIconAnimation(new LemonBubblePaintContext() {
             @Override
             public void paint(Canvas canvas, float playProgress) {
+                int aimA = (info.getIconColor() & 0xff000000) >>> 24;
+                int aimR = (info.getIconColor() & 0x00ff0000) >> 16;
+                int aimG = (info.getIconColor() & 0x0000ff00) >> 8;
+                int aimB = (info.getIconColor() & 0x000000ff);
                 Paint paint = new Paint();
                 paint.setStyle(Paint.Style.STROKE);
-                paint.setColor(Color.argb(30, 0, 205, 0));
+                // 设置外侧的浅色圆形为图标颜色的0.1倍透明度
+                paint.setColor(Color.argb((int) (aimA * 0.1), aimR, aimG, aimB));
                 paint.setStrokeWidth(8);
+                // 绘制外侧的完整浅色圆形
                 canvas.drawCircle(canvas.getWidth() / 2, canvas.getHeight() / 2, canvas.getWidth() / 2 - 4, paint);
-                paint.setColor(Color.argb(255, 0, 205, 0));
+                paint.setColor(info.getIconColor());
                 Path path = new Path();
                 path.addArc(new RectF(4, 4, canvas.getWidth() - 4, canvas.getHeight() - 4), 67, -225);
+                // 画对号第一笔
                 path.lineTo((float) (canvas.getWidth() * 0.42),
                         (float) (canvas.getHeight() * 0.68));
+                // 画对号第二笔
                 path.lineTo((float) (canvas.getWidth() * 0.75),
                         (float) (canvas.getHeight() * 0.35));
                 Path disPath = new Path();
                 PathMeasure measure = new PathMeasure();
                 measure.setPath(path, false);
+                // 根据实验，发现对号的路径长度占总长度的26%，所以下面减去0.26
                 measure.getSegment((float) Math.max(0, playProgress - 0.26) * measure.getLength(), playProgress * measure.getLength(), disPath, true);
                 canvas.drawPath(disPath, paint);
             }
@@ -83,13 +93,11 @@ public class LemonBubble {
      */
     public static LemonBubbleInfo getErrorBubbleInfo() {
         final LemonBubbleInfo info = new LemonBubbleInfo();
-        info.setLayoutStyle(LemonBubbleLayoutStyle.ICON_LEFT_TITLE_RIGHT);
-        info.setProportionOfDeviation(0.01f);
-        info.setBubbleSize(220, 100);
         info.setIconColor(Color.argb(255, 255, 48, 48));
         info.setIconAnimation(new LemonBubblePaintContext() {
             @Override
             public void paint(Canvas canvas, float playProgress) {
+                // 此部分代码的基本含义和第一段对号的含义基本一致，请参考上面
                 int aimA = (info.getIconColor() & 0xff000000) >>> 24;
                 int aimR = (info.getIconColor() & 0x00ff0000) >> 16;
                 int aimG = (info.getIconColor() & 0x0000ff00) >> 8;
@@ -156,13 +164,15 @@ public class LemonBubble {
      */
     public static LemonBubbleInfo getRoundProgressBubbleInfo() {
         final LemonBubbleInfo info = new LemonBubbleInfo();
-        info.setBubbleSize(160, 140);
-        info.setIconColor(Color.argb(255, 70, 123, 220));
+        info.setBubbleSize(160, 160);
+        info.setMaskColor(Color.argb(180, 0, 0, 0));
+//        info.setIconColor(Color.argb(255, 70, 123, 220));
         info.setIconAnimationRepeat(true);
         info.setFrameAnimationTime(1500);
         info.setIconAnimation(new LemonBubblePaintContext() {
             @Override
             public void paint(Canvas canvas, float playProgress) {
+                // 此部分代码的基本含义和第一段对号的含义基本一致，请参考上面
                 int aimA = (info.getIconColor() & 0xff000000) >>> 24;
                 int aimR = (info.getIconColor() & 0x00ff0000) >> 16;
                 int aimG = (info.getIconColor() & 0x0000ff00) >> 8;

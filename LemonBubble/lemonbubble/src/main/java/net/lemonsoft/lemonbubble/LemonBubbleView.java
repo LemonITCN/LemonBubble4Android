@@ -174,25 +174,30 @@ public class LemonBubbleView {
             _paintView.setImageBitmap(info.getIconArray().get(0));
         } else {
             // 逐帧连环动画
-            _framePlayIndexAnimator = ValueAnimator.ofInt(0, info.getIconArray().size() - 1);
-            _framePlayIndexAnimator.setDuration(info.getIconArray().size() * info.getFrameAnimationTime());
-            _framePlayIndexAnimator.setRepeatCount(Integer.MAX_VALUE);
+            _framePlayIndexAnimator = ValueAnimator.ofInt(0, info.getIconArray().size() - 1);// 设置逐帧动画播放器的帧数范围为0 到为设置的图片数组中的元素数量 - 1
+            _framePlayIndexAnimator.setDuration(info.getIconArray().size() * info.getFrameAnimationTime());// 设置逐帧动画播放时间为动画帧数 * 每帧的时间间隔
+            _framePlayIndexAnimator.setRepeatCount(Integer.MAX_VALUE);// 设置重复次数为最大整数，为了不手动停止就一直循环
             _framePlayIndexAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
+                    // 逐帧修改图片，启动连环动画的效果
                     _paintView.setImageBitmap(info.getIconArray().get((int) (animation.getAnimatedValue())));
                 }
             });
+            // 启动动画执行器
             _framePlayIndexAnimator.start();
         }
-        // 初始化主内容面板的相关属性
+        // 设置根视图的透明度为1，不透明
         _PAT.setAlpha(_rootLayout, 1);
+        // 动画改变到内容面板的背景颜色到预设值
         _PAT.setBackgroundColor(_contentPanel, info.getCornerRadius(), info.getBackgroundColor());
-        info.calBubbleViewContentPanelFrame(_contentPanel);
-        info.calPaintViewAndTitleViewFrame(_paintView, _titleView);
+        // 设置内容面板的透明度为1，不透明
         _PAT.setAlpha(_contentPanel, 1);
         // 设置蒙版色
         _PAT.setBackgroundColor(_backMaskView, 0, info.getMaskColor());
+        // 调用泡泡控件信息对象中的方法来计算面板和图标标题等控件的位置和大小，并动画移动
+        info.calBubbleViewContentPanelFrame(_contentPanel);
+        info.calPaintViewAndTitleViewFrame(_paintView, _titleView);
     }
 
     /**
@@ -224,20 +229,21 @@ public class LemonBubbleView {
                 if (_currentBubbleInfo.hashCode() == bubbleInfo.hashCode())// 当前正在显示的泡泡信息对象没有改变
                     hide();
             }
-        }, autoCloseTime);
+        }, autoCloseTime);// 延迟关闭
     }
 
     /**
      * 隐藏当前正在显示的泡泡控件
      */
     public void hide() {
-        _PAT.setAlpha(_rootLayout, 0);
-        _PAT.setAlpha(_contentPanel, 0);
-        _PAT.setSize(_contentPanel, 0, 0);
-        _PAT.setSize(_paintView, 0, 0);
-        _PAT.setSize(_titleView, 0, 0);
-        _PAT.setLocation(_paintView, 0, 0);
-        _PAT.setLocation(_titleView, 0, 0);
+        _PAT.setAlpha(_rootLayout, 0);// 动画设置根视图不透明
+        _PAT.setAlpha(_contentPanel, 0);// 动画设置内容面板不透明
+        _PAT.setSize(_contentPanel, 0, 0);// 动画设置面板的大小为0，0
+        _PAT.setSize(_paintView, 0, 0);// 动画设置图标动画控件的大小为0，0
+        _PAT.setSize(_titleView, 0, 0);// 动画设置标题控件的大小为0，0
+        _PAT.setLocation(_paintView, 0, 0);// 动画设置图标动画控件的坐标为0，0，可以让动画看起来更像是整体缩小
+        _PAT.setLocation(_titleView, 0, 0);// 动画设置标题控件的坐标为0，0，可以让动画看起来更像是整体缩小
+        // 把内容面板缩小至屏幕中间
         _PAT.setLocation(_contentPanel, _PST.screenWidthDp() / 2, _PST.screenHeightDp() / 2);
         setIsShow(false);// 设置当前的状态为不显示状态
         new Handler().postDelayed(new Runnable() {
@@ -245,7 +251,7 @@ public class LemonBubbleView {
             public void run() {
                 _container.dismiss();
             }
-        }, 300);
+        }, 300);// 待所有动画处理完毕后关闭根Dialog
     }
 
 }

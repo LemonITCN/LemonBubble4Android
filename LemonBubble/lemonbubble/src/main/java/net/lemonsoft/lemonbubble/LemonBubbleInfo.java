@@ -32,7 +32,7 @@ public class LemonBubbleInfo {
     /**
      * 泡泡控件的高
      */
-    private int bubbleHeight = 140;
+    private int bubbleHeight = 120;
     /**
      * 泡泡控件的圆角半径
      */
@@ -113,7 +113,7 @@ public class LemonBubbleInfo {
     /**
      * 标题字体大小
      */
-    private int titleFontSize = 13;
+    private int titleFontSize = 11;
 
     public String getTitle() {
         return title;
