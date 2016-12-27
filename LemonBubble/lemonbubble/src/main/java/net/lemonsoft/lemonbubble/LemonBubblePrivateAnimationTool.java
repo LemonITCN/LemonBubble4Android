@@ -111,6 +111,8 @@ class LemonBubblePrivateAnimationTool {
         Drawable drawable = view.getBackground();
         if (drawable instanceof ColorDrawable)
             startColor = ((ColorDrawable) drawable).getColor();
+        if (drawable instanceof ShapeDrawable)
+            startColor = ((ShapeDrawable) drawable).getPaint().getColor();
         // 先算出原颜色的ARGB值
         final int startA = (startColor & 0xff000000) >>> 24;
         final int startR = (startColor & 0x00ff0000) >> 16;
@@ -140,10 +142,11 @@ class LemonBubblePrivateAnimationTool {
                         (int) (startR + subR * (float) animation.getAnimatedValue()),
                         (int) (startG + subG * (float) animation.getAnimatedValue()),
                         (int) (startB + subB * (float) animation.getAnimatedValue()));
-                if (cornerRadius == 0)
-                    view.setBackgroundColor(color);
-                else
-                    setCornerRadius(view, cornerRadius, color);
+//                if (cornerRadius == 0)
+                view.setBackgroundColor(color);
+                setCornerRadius(view, cornerRadius, color);
+//                else
+//                    setCornerRadius(view, cornerRadius, color);
             }
         });
         valueAnimator.start();
