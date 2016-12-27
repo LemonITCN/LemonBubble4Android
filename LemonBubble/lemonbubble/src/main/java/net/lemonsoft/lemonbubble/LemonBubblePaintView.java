@@ -45,9 +45,11 @@ public class LemonBubblePaintView extends ImageView {
     public void setBubbleInfo(LemonBubbleInfo bubbleInfo) {
         _playProgressValueAnimator.end();
         _bubbleInfo = bubbleInfo;
-        _playProgressValueAnimator.setRepeatCount(_bubbleInfo.isIconAnimationRepeat() ? Integer.MAX_VALUE : 0);
-        _playProgressValueAnimator.start();
-        _playProgressValueAnimator.setDuration(bubbleInfo.getFrameAnimationTime());
+        if (bubbleInfo != null) {
+            _playProgressValueAnimator.setRepeatCount(_bubbleInfo.isIconAnimationRepeat() ? Integer.MAX_VALUE : 0);
+            _playProgressValueAnimator.start();
+            _playProgressValueAnimator.setDuration(bubbleInfo.getFrameAnimationTime());
+        }
     }
 
     @Override

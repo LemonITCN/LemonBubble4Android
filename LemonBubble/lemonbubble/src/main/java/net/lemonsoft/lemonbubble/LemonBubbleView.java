@@ -145,6 +145,8 @@ public class LemonBubbleView {
 
         // 实例化标题显示标签控件
         _titleView = new TextView(_context);
+        _titleView.setX(0);
+        _titleView.setY(0);
         _titleView.setGravity(Gravity.CENTER);
 
         // 把所有控件添加到根视图上
@@ -162,6 +164,8 @@ public class LemonBubbleView {
     private void initContentPanel(final LemonBubbleInfo info) {
         if (_framePlayIndexAnimator != null)
             _framePlayIndexAnimator.end();
+        _paintView.setImageBitmap(null);
+        _paintView.setBubbleInfo(null);
         if (info.getIconArray() == null || info.getIconArray().size() == 0) {
             // 显示自定义动画
             _paintView.setBubbleInfo(info);
@@ -172,19 +176,21 @@ public class LemonBubbleView {
             // 逐帧连环动画
             _framePlayIndexAnimator = ValueAnimator.ofInt(0, info.getIconArray().size() - 1);
             _framePlayIndexAnimator.setDuration(info.getIconArray().size() * info.getFrameAnimationTime());
+            _framePlayIndexAnimator.setRepeatCount(Integer.MAX_VALUE);
             _framePlayIndexAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     _paintView.setImageBitmap(info.getIconArray().get((int) (animation.getAnimatedValue())));
                 }
             });
+            _framePlayIndexAnimator.start();
         }
         // 初始化主内容面板的相关属性
-        _PAT.setAlpha(_rootLayout, 255);
+        _PAT.setAlpha(_rootLayout, 1);
         _PAT.setBackgroundColor(_contentPanel, info.getCornerRadius(), info.getBackgroundColor());
         info.calBubbleViewContentPanelFrame(_contentPanel);
         info.calPaintViewAndTitleViewFrame(_paintView, _titleView);
-        _PAT.setAlpha(_contentPanel, 255);
+        _PAT.setAlpha(_contentPanel, 1);
         // 设置蒙版色
         _PAT.setBackgroundColor(_backMaskView, 0, info.getMaskColor());
     }
@@ -218,9 +224,12 @@ public class LemonBubbleView {
                 if (_currentBubbleInfo.hashCode() == bubbleInfo.hashCode())// 当前正在显示的泡泡信息对象没有改变
                     hide();
             }
-        }, 3000);
+        }, autoCloseTime);
     }
 
+    /**
+     * 隐藏当前正在显示的泡泡控件
+     */
     public void hide() {
         _PAT.setAlpha(_rootLayout, 0);
         _PAT.setAlpha(_contentPanel, 0);
@@ -228,6 +237,7 @@ public class LemonBubbleView {
         _PAT.setSize(_paintView, 0, 0);
         _PAT.setSize(_titleView, 0, 0);
         _PAT.setLocation(_paintView, 0, 0);
+        _PAT.setLocation(_titleView, 0, 0);
         _PAT.setLocation(_contentPanel, _PST.screenWidthDp() / 2, _PST.screenHeightDp() / 2);
         setIsShow(false);// 设置当前的状态为不显示状态
         new Handler().postDelayed(new Runnable() {

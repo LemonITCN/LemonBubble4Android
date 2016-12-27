@@ -9,7 +9,6 @@ import android.graphics.PathMeasure;
 import android.graphics.RectF;
 
 import net.lemonsoft.lemonbubble.enums.LemonBubbleLayoutStyle;
-import net.lemonsoft.lemonbubble.enums.LemonBubbleLocationStyle;
 import net.lemonsoft.lemonbubble.interfaces.LemonBubblePaintContext;
 
 /**
@@ -85,9 +84,8 @@ public class LemonBubble {
     public static LemonBubbleInfo getErrorBubbleInfo() {
         final LemonBubbleInfo info = new LemonBubbleInfo();
         info.setLayoutStyle(LemonBubbleLayoutStyle.ICON_LEFT_TITLE_RIGHT);
-        info.setLocationStyle(LemonBubbleLocationStyle.BOTTOM);
         info.setProportionOfDeviation(0.01f);
-        info.setBubbleSize(180, 80);
+        info.setBubbleSize(220, 100);
         info.setIconColor(Color.argb(255, 255, 48, 48));
         info.setIconAnimation(new LemonBubblePaintContext() {
             @Override
@@ -158,6 +156,7 @@ public class LemonBubble {
      */
     public static LemonBubbleInfo getRoundProgressBubbleInfo() {
         final LemonBubbleInfo info = new LemonBubbleInfo();
+        info.setBubbleSize(160, 140);
         info.setIconColor(Color.argb(255, 70, 123, 220));
         info.setIconAnimationRepeat(true);
         info.setFrameAnimationTime(1500);
@@ -196,6 +195,34 @@ public class LemonBubble {
         LemonBubbleInfo bubbleInfo = getRoundProgressBubbleInfo();
         bubbleInfo.setTitle(title);
         LemonBubbleView.defaultBubbleView().showBubbleInfo(context, bubbleInfo);
+    }
+
+    /**
+     * 展示泡泡控件
+     *
+     * @param context    上下文对象
+     * @param bubbleInfo 泡泡信息描述对象
+     */
+    public static void showBubbleInfo(Context context, LemonBubbleInfo bubbleInfo) {
+        LemonBubbleView.defaultBubbleView().showBubbleInfo(context, bubbleInfo);
+    }
+
+    /**
+     * 展示泡泡控件并在指定的时间后关闭
+     *
+     * @param context       上下文对象
+     * @param bubbleInfo    泡泡信息描述对象
+     * @param autoCloseTime 自动关闭的时间
+     */
+    public static void showBubbleInfo(Context context, LemonBubbleInfo bubbleInfo, int autoCloseTime) {
+        LemonBubbleView.defaultBubbleView().showBubbleInfo(context, bubbleInfo, autoCloseTime);
+    }
+
+    /**
+     * 隐藏当前正在显示的泡泡控件
+     */
+    public static void hide() {
+        LemonBubbleView.defaultBubbleView().hide();
     }
 
 }

@@ -51,8 +51,6 @@ class LemonBubblePrivateAnimationTool {
             public void onAnimationUpdate(ValueAnimator animation) {
                 int currentWidth = (int) ((float) animation.getAnimatedValue() * subWidth + startWidth);
                 int currentHeight = (int) ((float) animation.getAnimatedValue() * subHeight + startHeight);
-                System.out.println("width: " + currentWidth);
-                System.out.println("height: " + currentWidth);
                 view.setLayoutParams(
                         new RelativeLayout.LayoutParams(_DP(currentWidth), _DP(currentHeight)));
                 view.postInvalidate();
@@ -135,6 +133,10 @@ class LemonBubblePrivateAnimationTool {
                 // 根据进度来修改颜色
                 int color = Color.argb(
                         (int) (startA + subA * (float) animation.getAnimatedValue()),
+                        (int) (startR + subR * (float) animation.getAnimatedValue()),
+                        (int) (startG + subG * (float) animation.getAnimatedValue()),
+                        (int) (startB + subB * (float) animation.getAnimatedValue()));
+                System.out.printf("a：%d   ,   r:%d   ,   g:%d   ,   b:%d  ---", (int) (startA + subA * (float) animation.getAnimatedValue()),
                         (int) (startR + subR * (float) animation.getAnimatedValue()),
                         (int) (startG + subG * (float) animation.getAnimatedValue()),
                         (int) (startB + subB * (float) animation.getAnimatedValue()));
