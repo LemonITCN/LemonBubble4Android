@@ -1,5 +1,6 @@
 package net.lemonsoft.lemonbubble;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -22,6 +23,8 @@ public class LemonBubblePaintView extends ImageView {
 
     public LemonBubblePaintView(final Context context) {
         super(context);
+        if (_playProgressValueAnimator != null)
+            _playProgressValueAnimator.end();
         _playProgressValueAnimator = ValueAnimator.ofFloat(0, 1);
         _playProgressValueAnimator.setDuration(600);
         _playProgressValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -34,20 +37,25 @@ public class LemonBubblePaintView extends ImageView {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                LemonBubble.showError(context, "支付完了");
+                LemonBubble.showError(context, "支付完了", 3000);
             }
         });
     }
 
     public void setBubbleInfo(LemonBubbleInfo bubbleInfo) {
+        _playProgressValueAnimator.end();
         _bubbleInfo = bubbleInfo;
+        _playProgressValueAnimator.setRepeatCount(_bubbleInfo.isIconAnimationRepeat() ? Integer.MAX_VALUE : 0);
         _playProgressValueAnimator.start();
+        _playProgressValueAnimator.setDuration(bubbleInfo.getFrameAnimationTime());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (_bubbleInfo != null)// 判断非空指针才进行操作
+        if (_bubbleInfo != null &&
+                _bubbleInfo.getIconAnimation() != null &&
+                (_bubbleInfo.getIconArray() == null || _bubbleInfo.getIconArray().size() == 0))// 判断非空指针才进行操作
             _bubbleInfo.getIconAnimation().paint(canvas, _playProgressValue);// 调用绘制函数开始绘制
     }
 

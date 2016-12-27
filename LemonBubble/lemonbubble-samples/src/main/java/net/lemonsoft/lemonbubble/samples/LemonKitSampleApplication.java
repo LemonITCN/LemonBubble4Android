@@ -2,8 +2,6 @@ package net.lemonsoft.lemonbubble.samples;
 
 import android.app.Application;
 
-import net.lemonsoft.lemonbubble.LemonBubble;
-
 /**
  * Created by LiuRi on 2016/12/26.
  */

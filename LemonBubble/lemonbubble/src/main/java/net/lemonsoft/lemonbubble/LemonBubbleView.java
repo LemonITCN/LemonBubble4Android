@@ -1,9 +1,10 @@
 package net.lemonsoft.lemonbubble;
 
+import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -44,6 +45,8 @@ public class LemonBubbleView {
     private boolean _isShow;
     // 记录连环动画当前播放的帧索引的变量
     private int _frameAnimationPlayIndex;
+    // 帧动画播放指针切换动画器
+    private ValueAnimator _framePlayIndexAnimator;
 
     // 是否已经初始化过了，避免重新创建控件
     private boolean haveInit = false;
@@ -156,24 +159,34 @@ public class LemonBubbleView {
      *
      * @param info 泡泡信息对象
      */
-    private void initContentPanel(LemonBubbleInfo info) {
+    private void initContentPanel(final LemonBubbleInfo info) {
+        if (_framePlayIndexAnimator != null)
+            _framePlayIndexAnimator.end();
         if (info.getIconArray() == null || info.getIconArray().size() == 0) {
             // 显示自定义动画
             _paintView.setBubbleInfo(info);
         } else if (info.getIconArray().size() == 1) {
             // 显示单张图片
+            _paintView.setImageBitmap(info.getIconArray().get(0));
         } else {
             // 逐帧连环动画
+            _framePlayIndexAnimator = ValueAnimator.ofInt(0, info.getIconArray().size() - 1);
+            _framePlayIndexAnimator.setDuration(info.getIconArray().size() * info.getFrameAnimationTime());
+            _framePlayIndexAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    _paintView.setImageBitmap(info.getIconArray().get((int) (animation.getAnimatedValue())));
+                }
+            });
         }
         // 初始化主内容面板的相关属性
         _PAT.setAlpha(_rootLayout, 255);
-        _contentPanel.setBackgroundColor(Color.WHITE);
+        _PAT.setBackgroundColor(_contentPanel, info.getCornerRadius(), info.getBackgroundColor());
         info.calBubbleViewContentPanelFrame(_contentPanel);
         info.calPaintViewAndTitleViewFrame(_paintView, _titleView);
+        _PAT.setAlpha(_contentPanel, 255);
         // 设置蒙版色
-        _PAT.setBackgroundColor(_backMaskView, info.getMaskColor());
-        // 设置内容显示面板的圆角
-        _PAT.setCornerRadius(_contentPanel, _PST.dpToPx(info.getCornerRadius()), info.getBackgroundColor());
+        _PAT.setBackgroundColor(_backMaskView, 0, info.getMaskColor());
     }
 
     /**
@@ -187,8 +200,42 @@ public class LemonBubbleView {
         _currentBubbleInfo = bubbleInfo;// 现将泡泡信息对象保存起来
         if (!isShow())// 如果已经显示，就不进行再弹出新的层
             _container.show();
-        setIsShow(true);// 保存当前状态为已显示
         initContentPanel(bubbleInfo);// 根据泡泡信息对象对正文内容面板进行初始化
+    }
+
+    /**
+     * 展示泡泡控件并在指定的时间后关闭
+     *
+     * @param context       上下文对象
+     * @param bubbleInfo    泡泡信息描述对象
+     * @param autoCloseTime 自动关闭的时间
+     */
+    public void showBubbleInfo(final Context context, final LemonBubbleInfo bubbleInfo, int autoCloseTime) {
+        showBubbleInfo(context, bubbleInfo);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (_currentBubbleInfo.hashCode() == bubbleInfo.hashCode())// 当前正在显示的泡泡信息对象没有改变
+                    hide();
+            }
+        }, 3000);
+    }
+
+    public void hide() {
+        _PAT.setAlpha(_rootLayout, 0);
+        _PAT.setAlpha(_contentPanel, 0);
+        _PAT.setSize(_contentPanel, 0, 0);
+        _PAT.setSize(_paintView, 0, 0);
+        _PAT.setSize(_titleView, 0, 0);
+        _PAT.setLocation(_paintView, 0, 0);
+        _PAT.setLocation(_contentPanel, _PST.screenWidthDp() / 2, _PST.screenHeightDp() / 2);
+        setIsShow(false);// 设置当前的状态为不显示状态
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                _container.dismiss();
+            }
+        }, 300);
     }
 
 }

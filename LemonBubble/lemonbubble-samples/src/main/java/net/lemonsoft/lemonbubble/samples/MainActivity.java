@@ -31,10 +31,7 @@ public class MainActivity extends Activity {
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LemonBubble.showRight(MainActivity.this, "支付成功");
-//                Intent intent = new Intent();
-//                intent.setClass(MainActivity.this, TestActivity.class);
-//                startActivity(intent);
+                LemonBubble.showRoundProgress(MainActivity.this, "支付中...");
             }
         });
 

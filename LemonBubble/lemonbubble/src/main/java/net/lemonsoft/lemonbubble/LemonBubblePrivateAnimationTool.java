@@ -108,7 +108,7 @@ class LemonBubblePrivateAnimationTool {
      * @param view  要改变背景颜色的控件
      * @param color 要改变成的目标背景颜色
      */
-    void setBackgroundColor(final View view, int color) {
+    void setBackgroundColor(final View view, final int cornerRadius, int color) {
         int startColor = Color.argb(0, 255, 255, 255);
         Drawable drawable = view.getBackground();
         if (drawable instanceof ColorDrawable)
@@ -133,29 +133,40 @@ class LemonBubblePrivateAnimationTool {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 // 根据进度来修改颜色
-                view.setBackgroundColor(Color.argb((int) (startA + subA * (float) animation.getAnimatedValue()),
+                int color = Color.argb(
+                        (int) (startA + subA * (float) animation.getAnimatedValue()),
                         (int) (startR + subR * (float) animation.getAnimatedValue()),
                         (int) (startG + subG * (float) animation.getAnimatedValue()),
-                        (int) (startB + subB * (float) animation.getAnimatedValue())));
+                        (int) (startB + subB * (float) animation.getAnimatedValue()));
+                if (cornerRadius == 0)
+                    view.setBackgroundColor(color);
+                else
+                    setCornerRadius(view, cornerRadius, color);
             }
         });
         valueAnimator.start();
     }
 
     void setCornerRadius(View view, int radius, int color) {
-        int borderLength = 0;
-        float[] outerRadii = new float[8];
-        float[] innerRadii = new float[8];
+        int borderWidth = 0;// 加边框后会出现空心圆角矩形的效果，所以设置为0
+        float[] outerRadius = new float[8];
+        float[] innerRadius = new float[8];
         for (int i = 0; i < 8; i++) {
-            outerRadii[i] = radius + borderLength;
-            innerRadii[i] = radius;
+            outerRadius[i] = radius + borderWidth;
+            innerRadius[i] = radius;
         }
-        ShapeDrawable sd = new ShapeDrawable(new RoundRectShape(outerRadii, new RectF(borderLength, borderLength, borderLength, borderLength), innerRadii));
-        sd.getPaint().setColor(color);
+        ShapeDrawable shapeDrawable = // 创建图形drawable
+                new ShapeDrawable(
+                        // 创建圆角矩形
+                        new RoundRectShape(outerRadius,
+                                new RectF(borderWidth, borderWidth, borderWidth, borderWidth),
+                                innerRadius));
+        shapeDrawable.getPaint().setColor(color);// 使用指定的颜色绘制，即背景颜色
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            view.setBackground(sd);
+            // 高版本SDK使用新的API
+            view.setBackground(shapeDrawable);
         } else {
-            view.setBackgroundDrawable(sd);
+            view.setBackgroundDrawable(shapeDrawable);
         }
     }
 

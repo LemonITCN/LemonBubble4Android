@@ -46,6 +46,10 @@ public class LemonBubbleInfo {
      */
     private LemonBubblePaintContext iconAnimation = null;
     /**
+     * 自定义图标动画是否重复播放
+     */
+    private boolean isIconAnimationRepeat = false;
+    /**
      * 进度被改变的回调
      */
     private LemonBubbleProgressModePaintContext onProgressChanged = null;
@@ -59,8 +63,9 @@ public class LemonBubbleInfo {
     private String title = "LemonBubble";
     /**
      * 帧动画时间间隔，单位ms
+     * 如果当前为自定义动画模式，那么该时间为自定义动画的单次变换时间
      */
-    private int frameAnimationTime = 100;
+    private int frameAnimationTime = 500;
     /**
      * 图标占比 0 - 1，图标控件的边长占高度的比例
      */
@@ -161,6 +166,14 @@ public class LemonBubbleInfo {
 
     public void setIconAnimation(LemonBubblePaintContext iconAnimation) {
         this.iconAnimation = iconAnimation;
+    }
+
+    public boolean isIconAnimationRepeat() {
+        return isIconAnimationRepeat;
+    }
+
+    public void setIconAnimationRepeat(boolean iconAnimationRepeat) {
+        isIconAnimationRepeat = iconAnimationRepeat;
     }
 
     public LemonBubbleProgressModePaintContext getOnProgressChanged() {
