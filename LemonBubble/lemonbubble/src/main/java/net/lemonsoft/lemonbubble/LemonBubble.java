@@ -166,7 +166,7 @@ public class LemonBubble {
         final LemonBubbleInfo info = new LemonBubbleInfo();
         info.setBubbleSize(160, 160);
         info.setMaskColor(Color.argb(180, 0, 0, 0));
-//        info.setIconColor(Color.argb(255, 70, 123, 220));
+        info.setIconColor(Color.argb(255, 70, 123, 220));
         info.setIconAnimationRepeat(true);
         info.setFrameAnimationTime(1500);
         info.setIconAnimation(new LemonBubblePaintContext() {
