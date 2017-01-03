@@ -55,6 +55,7 @@ public class LemonBubble {
                 measure.setPath(path, false);
                 // 根据实验，发现对号的路径长度占总长度的26%，所以下面减去0.26
                 measure.getSegment((float) Math.max(0, playProgress - 0.26) * measure.getLength(), playProgress * measure.getLength(), disPath, true);
+                disPath.rLineTo(0, 0);// 解决在android4.4.4以下版本导致的无法绘制path的bug
                 canvas.drawPath(disPath, paint);
             }
         });
@@ -116,6 +117,7 @@ public class LemonBubble {
                 PathMeasure measure = new PathMeasure();
                 measure.setPath(path, false);
                 measure.getSegment((float) Math.max(0, playProgress - 0.16) * measure.getLength(), playProgress * measure.getLength(), disPath, true);
+                disPath.rLineTo(0, 0);// 解决在android4.4.4以下版本导致的无法绘制path的bug
                 canvas.drawPath(disPath, paint);
 
                 Path pathRight = new Path();
@@ -126,6 +128,7 @@ public class LemonBubble {
                 PathMeasure measureRight = new PathMeasure();
                 measureRight.setPath(pathRight, false);
                 measureRight.getSegment((float) Math.max(0, playProgress - 0.16) * measureRight.getLength(), playProgress * measureRight.getLength(), disPathRight, true);
+                disPathRight.rLineTo(0, 0);// 解决在android4.4.4以下版本导致的无法绘制path的bug
                 canvas.drawPath(disPathRight, paint);
             }
         });
@@ -190,6 +193,7 @@ public class LemonBubble {
                 measure.setPath(path, false);
                 // 截取线段起到渐长渐短的效果：进度的2次方 作为起点，根号2的进度作为终点
                 measure.getSegment((float) (Math.pow(playProgress, 2) * measure.getLength()), (float) (Math.sqrt(playProgress) * measure.getLength()), disPath, true);
+                disPath.rLineTo(0, 0);// 解决在android4.4.4以下版本导致的无法绘制path的bug
                 canvas.drawPath(disPath, paint);
             }
         });
