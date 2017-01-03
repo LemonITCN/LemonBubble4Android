@@ -41,7 +41,10 @@ public class LemonBubblePaintView extends ImageView {
             _playProgressValueAnimator.end();// 为了保险起见，先尝试停止上一次的动画执行器
         _bubbleInfo = bubbleInfo;// 保存泡泡信息对象
         if (bubbleInfo != null) {// 如果传进来的不是null，那么开始调用动画执行器，开始播放动画，因为防止在非自定义动画模式下显示自定义动画的最后一帧，所以在这里进行一次判断
-            _playProgressValueAnimator.setRepeatCount(_bubbleInfo.isIconAnimationRepeat() ? Integer.MAX_VALUE : 0);// 根据泡泡信息对象中设置的是否重复来设置重复次数
+
+            // 这里之所以没用Integer.MAX_VALUE,是因为在Android7.0中有时候有问题，如果谁能知道原因麻烦告诉我一下
+            // ⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️⤵️
+            _playProgressValueAnimator.setRepeatCount(_bubbleInfo.isIconAnimationRepeat() ? 99999999 : 0);// 根据泡泡信息对象中设置的是否重复来设置重复次数
             _playProgressValueAnimator.start();// 开始播放动画
             _playProgressValueAnimator.setDuration(bubbleInfo.getFrameAnimationTime());// 设置单次动画的总执行时间
         }
