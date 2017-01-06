@@ -1,5 +1,6 @@
 package net.lemonsoft.lemonbubble;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -119,181 +120,204 @@ public class LemonBubbleInfo {
         return title;
     }
 
-    public void setTitle(String title) {
+    public LemonBubbleInfo setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public int getBubbleWidth() {
         return bubbleWidth;
     }
 
-    public void setBubbleWidth(int bubbleWidth) {
+    public LemonBubbleInfo setBubbleWidth(int bubbleWidth) {
         this.bubbleWidth = bubbleWidth;
+        return this;
     }
 
     public int getBubbleHeight() {
         return bubbleHeight;
     }
 
-    public void setBubbleHeight(int bubbleHeight) {
+    public LemonBubbleInfo setBubbleHeight(int bubbleHeight) {
         this.bubbleHeight = bubbleHeight;
+        return this;
     }
 
-    public void setBubbleSize(int width, int height) {
+    public LemonBubbleInfo setBubbleSize(int width, int height) {
         setBubbleWidth(width);
         setBubbleHeight(height);
+        return this;
     }
 
     public int getCornerRadius() {
         return cornerRadius;
     }
 
-    public void setCornerRadius(int cornerRadius) {
+    public LemonBubbleInfo setCornerRadius(int cornerRadius) {
         this.cornerRadius = cornerRadius;
+        return this;
     }
 
     public LemonBubbleLayoutStyle getLayoutStyle() {
         return layoutStyle;
     }
 
-    public void setLayoutStyle(LemonBubbleLayoutStyle layoutStyle) {
+    public LemonBubbleInfo setLayoutStyle(LemonBubbleLayoutStyle layoutStyle) {
         this.layoutStyle = layoutStyle;
+        return this;
     }
 
     public LemonBubblePaintContext getIconAnimation() {
         return iconAnimation;
     }
 
-    public void setIconAnimation(LemonBubblePaintContext iconAnimation) {
+    public LemonBubbleInfo setIconAnimation(LemonBubblePaintContext iconAnimation) {
         this.iconAnimation = iconAnimation;
+        return this;
     }
 
     public boolean isIconAnimationRepeat() {
         return isIconAnimationRepeat;
     }
 
-    public void setIconAnimationRepeat(boolean iconAnimationRepeat) {
+    public LemonBubbleInfo setIconAnimationRepeat(boolean iconAnimationRepeat) {
         isIconAnimationRepeat = iconAnimationRepeat;
+        return this;
     }
 
     public LemonBubbleProgressModePaintContext getOnProgressChanged() {
         return onProgressChanged;
     }
 
-    public void setOnProgressChanged(LemonBubbleProgressModePaintContext onProgressChanged) {
+    public LemonBubbleInfo setOnProgressChanged(LemonBubbleProgressModePaintContext onProgressChanged) {
         this.onProgressChanged = onProgressChanged;
+        return this;
     }
 
     public List<Bitmap> getIconArray() {
         return iconArray;
     }
 
-    public void setIconArray(List<Bitmap> iconArray) {
+    public LemonBubbleInfo setIconArray(List<Bitmap> iconArray) {
         this.iconArray = iconArray;
+        return this;
     }
 
     public int getFrameAnimationTime() {
         return frameAnimationTime;
     }
 
-    public void setFrameAnimationTime(int frameAnimationTime) {
+    public LemonBubbleInfo setFrameAnimationTime(int frameAnimationTime) {
         this.frameAnimationTime = frameAnimationTime;
+        return this;
     }
 
     public float getProportionOfIcon() {
         return proportionOfIcon;
     }
 
-    public void setProportionOfIcon(float proportionOfIcon) {
+    public LemonBubbleInfo setProportionOfIcon(float proportionOfIcon) {
         this.proportionOfIcon = proportionOfIcon;
+        return this;
     }
 
     public float getProportionOfSpace() {
         return proportionOfSpace;
     }
 
-    public void setProportionOfSpace(float proportionOfSpace) {
+    public LemonBubbleInfo setProportionOfSpace(float proportionOfSpace) {
         this.proportionOfSpace = proportionOfSpace;
+        return this;
     }
 
     public float getProportionOfPaddingX() {
         return proportionOfPaddingX;
     }
 
-    public void setProportionOfPaddingX(float proportionOfPaddingX) {
+    public LemonBubbleInfo setProportionOfPaddingX(float proportionOfPaddingX) {
         this.proportionOfPaddingX = proportionOfPaddingX;
+        return this;
     }
 
     public float getProportionOfPaddingY() {
         return proportionOfPaddingY;
     }
 
-    public void setProportionOfPaddingY(float proportionOfPaddingY) {
+    public LemonBubbleInfo setProportionOfPaddingY(float proportionOfPaddingY) {
         this.proportionOfPaddingY = proportionOfPaddingY;
+        return this;
     }
 
     public LemonBubbleLocationStyle getLocationStyle() {
         return locationStyle;
     }
 
-    public void setLocationStyle(LemonBubbleLocationStyle locationStyle) {
+    public LemonBubbleInfo setLocationStyle(LemonBubbleLocationStyle locationStyle) {
         this.locationStyle = locationStyle;
+        return this;
     }
 
     public float getProportionOfDeviation() {
         return proportionOfDeviation;
     }
 
-    public void setProportionOfDeviation(float proportionOfDeviation) {
+    public LemonBubbleInfo setProportionOfDeviation(float proportionOfDeviation) {
         this.proportionOfDeviation = proportionOfDeviation;
+        return this;
     }
 
     public boolean isShowMaskView() {
         return isShowMaskView;
     }
 
-    public void setShowMaskView(boolean showMaskView) {
+    public LemonBubbleInfo setShowMaskView(boolean showMaskView) {
         isShowMaskView = showMaskView;
+        return this;
     }
 
     public int getMaskColor() {
         return maskColor;
     }
 
-    public void setMaskColor(int maskColor) {
+    public LemonBubbleInfo setMaskColor(int maskColor) {
         this.maskColor = maskColor;
+        return this;
     }
 
     public int getBackgroundColor() {
         return backgroundColor;
     }
 
-    public void setBackgroundColor(int backgroundColor) {
+    public LemonBubbleInfo setBackgroundColor(int backgroundColor) {
         this.backgroundColor = backgroundColor;
+        return this;
     }
 
     public int getIconColor() {
         return iconColor;
     }
 
-    public void setIconColor(int iconColor) {
+    public LemonBubbleInfo setIconColor(int iconColor) {
         this.iconColor = iconColor;
+        return this;
     }
 
     public int getTitleColor() {
         return titleColor;
     }
 
-    public void setTitleColor(int titleColor) {
+    public LemonBubbleInfo setTitleColor(int titleColor) {
         this.titleColor = titleColor;
+        return this;
     }
 
     public int getTitleFontSize() {
         return titleFontSize;
     }
 
-    public void setTitleFontSize(int titleFontSize) {
+    public LemonBubbleInfo setTitleFontSize(int titleFontSize) {
         this.titleFontSize = titleFontSize;
+        return this;
     }
 
     private int _DP(int value) {
@@ -437,6 +461,25 @@ public class LemonBubbleInfo {
         _PAT.setSize(paintView, iconWidth, iconWidth);
         _PAT.setLocation(titleView, titleX, titleY);
         _PAT.setSize(titleView, titleWidth, titleHeight);
+    }
+
+    /**
+     * 展示这个泡泡控件，并且在指定的时间后关闭
+     *
+     * @param context       要显示在哪个Activity
+     * @param autoCloseTime 自动关闭的时间
+     */
+    public void show(Context context, int autoCloseTime) {
+        LemonBubble.showBubbleInfo(context, this, autoCloseTime);
+    }
+
+    /**
+     * 展示这个跑酷控件
+     *
+     * @param context 要显示在哪个Activity
+     */
+    public void show(Context context) {
+        LemonBubble.showBubbleInfo(context, this);
     }
 
 }

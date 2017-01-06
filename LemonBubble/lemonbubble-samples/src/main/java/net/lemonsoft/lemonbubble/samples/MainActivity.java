@@ -47,7 +47,11 @@ public class MainActivity extends Activity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LemonBubble.showRight(MainActivity.this, "这是一个成功的提示", 2000);
+                LemonBubble.getRightBubbleInfo()// 增加无限点语法修改bubbleInfo的特性
+                        .setTitle("这是一个成功的提示")
+                        .setTitleFontSize(12)
+                        .show(MainActivity.this, 2000);
+//                LemonBubble.showRight(MainActivity.this, "这是一个成功的提示", 2000);
             }
         });
 
@@ -78,6 +82,7 @@ public class MainActivity extends Activity {
                 myInfo.setLocationStyle(LemonBubbleLocationStyle.BOTTOM);
                 myInfo.setLayoutStyle(LemonBubbleLayoutStyle.ICON_LEFT_TITLE_RIGHT);
                 myInfo.setTitle("正在删除");
+                myInfo.setTitleFontSize(20);
                 myInfo.setBubbleSize(200, 50);
                 myInfo.setProportionOfDeviation(0.1f);
                 LemonBubble.showBubbleInfo(MainActivity.this, myInfo);
