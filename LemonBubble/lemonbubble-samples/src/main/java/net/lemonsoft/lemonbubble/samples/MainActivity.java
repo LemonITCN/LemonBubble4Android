@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import net.lemonsoft.lemonbubble.LemonBubbleInfo;
 import net.lemonsoft.lemonbubble.LemonBubbleView;
 import net.lemonsoft.lemonbubble.enums.LemonBubbleLayoutStyle;
 import net.lemonsoft.lemonbubble.enums.LemonBubbleLocationStyle;
+import net.lemonsoft.lemonbubble.interfaces.LemonBubblePaintContext;
 
 import java.util.ArrayList;
 import java.util.List;
