@@ -1,9 +1,20 @@
 # LemonBubble4Android
 > 作者：1em0nsOft - LiuRi
 >
-> 版本号：1.0.3
+> 版本号：1.0.4
 >
 > 简介：这是一个完全Made in China的炫酷弹出指示层Android版本（-_-#意思就是还有iOS的），他能让你快速的自定义任何样式的弹出框。
+
+> 最新更新记录：
+>
+> 支持.点语法无限修改BubbleInfo~
+>
+> ```java
+> LemonBubble.getRightBubbleInfo()// 增加无限点语法修改bubbleInfo的特性
+>                         .setTitle("这是一个成功的提示")
+>                         .setTitleFontSize(12)
+>                         .show(MainActivity.this, 2000);
+> ```
 
 - 废话不多说，先看看图，来~
 
@@ -27,7 +38,7 @@ allprojects {
 dependencies {
     // ...  你的其他依赖
     // 然后加入下面这行
-    compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.3'
+    compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.4'
 }
 ```
 
