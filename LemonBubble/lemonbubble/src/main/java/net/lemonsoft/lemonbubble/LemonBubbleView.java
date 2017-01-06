@@ -1,6 +1,7 @@
 package net.lemonsoft.lemonbubble;
 
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -93,7 +94,7 @@ public class LemonBubbleView {
     private void autoInit(Context context) {
         _context = context;
         _PST.setContext(context);// 初始化尺寸工具类
-        if (!haveInit) {
+        if (!haveInit) {// 暂时先关闭判断，因为这样可以防止控件
             initContainerAndRootLayout();// 初始化容器和根视图
             initCommonView();// 初始化公共的控件
             haveInit = true;
@@ -209,8 +210,9 @@ public class LemonBubbleView {
     public void showBubbleInfo(Context context, LemonBubbleInfo bubbleInfo) {
         autoInit(context);
         _currentBubbleInfo = bubbleInfo;// 现将泡泡信息对象保存起来
-        if (!isShow())// 如果已经显示，就不进行再弹出新的层
+        if (!isShow()) {// 如果已经显示，就不进行再弹出新的层
             _container.show();
+        }
         initContentPanel(bubbleInfo);// 根据泡泡信息对象对正文内容面板进行初始化
     }
 
@@ -250,6 +252,8 @@ public class LemonBubbleView {
             @Override
             public void run() {
                 _container.dismiss();
+                haveInit = false;// 让其每次彻底关闭后在开启都重新创建对象，防止部分手机按返回键后再次弹出时候闪退
+                // 如果哪位大神有更好的办法请联系我  liuri@lemonsoft.net
             }
         }, 300);// 待所有动画处理完毕后关闭根Dialog
     }
