@@ -209,6 +209,8 @@ public class LemonBubbleView {
      * @return 是否显示的布尔值
      */
     private boolean isFragmentShowing(android.support.v4.app.Fragment fragment) {
+        if (!LemonBubbleGlobal.useFragmentDisplayCheck)// 没有开启Fragment显示检测
+            return true;
         if (!fragment.getUserVisibleHint())// ViewPager嵌套时还没有触发显示
             return false;
         if (fragment.isHidden())// 当前fragment被隐藏了
@@ -225,6 +227,8 @@ public class LemonBubbleView {
      * @return 是否显示的布尔值
      */
     private boolean isFragmentShowing(Fragment fragment) {
+        if (!LemonBubbleGlobal.useFragmentDisplayCheck)// 没有开启Fragment显示检测
+            return true;
         if (!fragment.getUserVisibleHint())// ViewPager嵌套时还没有触发显示
             return false;
         if (fragment.isHidden())// 当前fragment被隐藏了

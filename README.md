@@ -1,19 +1,22 @@
 # LemonBubble4Android
 > 作者：1em0nsOft - LiuRi
 >
-> 版本号：1.0.4
+> 版本号：1.0.5
 >
 > 简介：这是一个完全Made in China的炫酷弹出指示层Android版本（-_-#意思就是还有iOS的），他能让你快速的自定义任何样式的弹出框。
 
 > 最新更新记录：
 >
-> 支持.点语法无限修改BubbleInfo~
+> 支持Fragment自动检测功能啦，当你在Fragment中试图弹出LemonBubble的时候，会自动判断当前Fragment是否处于显示状态，如果没有显示，或者对用户不可见，就会自动忽略哦！
+>
+> 这个是测试阶段，如果发现检测的不准确，麻烦告诉我一声哦~liuri@lemonsoft.net
+>
+> **什么？你不喜欢这个功能？或者影响你使用了？**你可以使用`LemonBubbleGlobal.useFragmentDisplayCheck = false;`这行代码把全局的Fragment显示检查功能关闭哦~
 >
 > ```java
-> LemonBubble.getRightBubbleInfo()// 增加无限点语法修改bubbleInfo的特性
->                         .setTitle("这是一个成功的提示")
->                         .setTitleFontSize(12)
->                         .show(MainActivity.this, 2000);
+> LemonBubble.showRight(this, "加载成功啦", 3000);
+> LemonBubble.showRoundProgress(XXXFragment.this,"LemonKit加载中..");
+> LemonBubble.showBubbleInfo(XXXFragment.this,bubbleInfo);
 > ```
 
 - 废话不多说，先看看图，来~
@@ -38,7 +41,7 @@ allprojects {
 dependencies {
     // ...  你的其他依赖
     // 然后加入下面这行
-    compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.4'
+    compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.5'
 }
 ```
 

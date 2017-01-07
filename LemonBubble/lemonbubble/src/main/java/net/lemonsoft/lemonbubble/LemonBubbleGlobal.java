@@ -108,5 +108,14 @@ public class LemonBubbleGlobal {
     public static int titleFontSize = 11;
 
 
+    /**
+     * 是否使用Fragment显示状态检测功能
+     * 如果开启，则如果在未被显示的Fragment中调用，弹框会自动被忽略
+     * <p>
+     * 测试阶段哦，如果发现检测的不准确，麻烦告诉我一声，liuri@lemonsoft.net
+     */
+    public static boolean useFragmentDisplayCheck = true;
+
+
 }
 
