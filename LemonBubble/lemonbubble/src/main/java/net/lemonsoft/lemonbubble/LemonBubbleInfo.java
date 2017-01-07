@@ -29,92 +29,92 @@ public class LemonBubbleInfo {
     /**
      * 泡泡控件的宽
      */
-    private int bubbleWidth = 180;
+    private int bubbleWidth = LemonBubbleGlobal.bubbleWidth;
     /**
      * 泡泡控件的高
      */
-    private int bubbleHeight = 120;
+    private int bubbleHeight = LemonBubbleGlobal.bubbleHeight;
     /**
      * 泡泡控件的圆角半径
      */
-    private int cornerRadius = 8;
+    private int cornerRadius = LemonBubbleGlobal.cornerRadius;
     /**
      * 图文布局属性
      */
-    private LemonBubbleLayoutStyle layoutStyle = LemonBubbleLayoutStyle.ICON_TOP_TITLE_BOTTOM;
+    private LemonBubbleLayoutStyle layoutStyle = LemonBubbleGlobal.layoutStyle;
     /**
      * 自定义图标动画
      */
-    private LemonBubblePaintContext iconAnimation = null;
+    private LemonBubblePaintContext iconAnimation = LemonBubbleGlobal.iconAnimation;
     /**
      * 自定义图标动画是否重复播放
      */
-    private boolean isIconAnimationRepeat = false;
+    private boolean isIconAnimationRepeat = LemonBubbleGlobal.isIconAnimationRepeat;
     /**
      * 进度被改变的回调
      */
-    private LemonBubbleProgressModePaintContext onProgressChanged = null;
+    private LemonBubbleProgressModePaintContext onProgressChanged = LemonBubbleGlobal.onProgressChanged;
     /**
      * 图标数组，如果该数组为空或者该对象为null，那么显示自定义动画，如果图标为一张，那么固定显示那个图标，大于一张的时候显示图片帧动画
      */
-    private List<Bitmap> iconArray = null;
+    private List<Bitmap> iconArray = LemonBubbleGlobal.iconArray;
     /**
      * 要显示的标题
      */
-    private String title = "LemonBubble";
+    private String title = LemonBubbleGlobal.title;
     /**
      * 帧动画时间间隔，单位ms
      * 如果当前为自定义动画模式，那么该时间为自定义动画的单次变换时间
      */
-    private int frameAnimationTime = 500;
+    private int frameAnimationTime = LemonBubbleGlobal.frameAnimationTime;
     /**
      * 图标占比 0 - 1，图标控件的边长占高度的比例
      */
-    private float proportionOfIcon = 0.675f;
+    private float proportionOfIcon = LemonBubbleGlobal.proportionOfIcon;
     /**
      * 间距占比 0 - 1，图标控件和标题控件之间距离占整个控件的比例（如果横向布局那么就相当于宽度，纵向布局相当于高度）
      */
-    private float proportionOfSpace = 0.1f;
+    private float proportionOfSpace = LemonBubbleGlobal.proportionOfSpace;
     /**
      * 内边距占比 0 - 1，整个泡泡控件的内边距，x最终为左右的内边距（左右内边距以宽度算最终的像素值）
      */
-    private float proportionOfPaddingX = 0.1f;
+    private float proportionOfPaddingX = LemonBubbleGlobal.proportionOfPaddingX;
     /**
      * 内边距占比 0 - 1，整个泡泡控件的内边距，y最终为上下的内边距（上下边距以高度算最终的像素值）
      */
-    private float proportionOfPaddingY = 0.1f;
+    private float proportionOfPaddingY = LemonBubbleGlobal.proportionOfPaddingY;
     /**
      * 位置样式
      */
-    private LemonBubbleLocationStyle locationStyle = LemonBubbleLocationStyle.CENTER;
+    private LemonBubbleLocationStyle locationStyle = LemonBubbleGlobal.locationStyle;
     /**
      * 泡泡控件显示时偏移，当位置样式为上中的时候，偏移值是向下移动，当位置样式为底部时候，偏移值是向上移动
      */
-    private float proportionOfDeviation = 0f;
+    private float proportionOfDeviation = LemonBubbleGlobal.proportionOfDeviation;
     /**
      * 是否展示蒙版，展示蒙版后，显示泡泡控件时会产生一个蒙版层来拦截所有其他控件的点击事件
      */
-    private boolean isShowMaskView = true;
+    private boolean isShowMaskView = LemonBubbleGlobal.isShowMaskView;
     /**
      * 蒙版颜色
      */
-    private int maskColor = Color.argb(150, 0, 0, 0);
+    private int maskColor = LemonBubbleGlobal.maskColor;
     /**
      * 泡泡控件的背景色
      */
-    private int backgroundColor = Color.argb((int) (255 * 0.8), 255, 255, 255);
+    private int backgroundColor = LemonBubbleGlobal.backgroundColor;
     /**
      * 图标渲染色
      */
-    private int iconColor = Color.BLACK;
+    private int iconColor = LemonBubbleGlobal.iconColor;
     /**
      * 标题文字颜色
      */
-    private int titleColor = Color.BLACK;
+    private int titleColor = LemonBubbleGlobal.titleColor;
     /**
      * 标题字体大小
      */
-    private int titleFontSize = 11;
+    private int titleFontSize = LemonBubbleGlobal.titleFontSize;
 
     public String getTitle() {
         return title;

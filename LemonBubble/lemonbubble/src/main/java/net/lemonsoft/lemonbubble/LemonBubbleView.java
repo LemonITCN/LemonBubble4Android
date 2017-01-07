@@ -3,6 +3,7 @@ package net.lemonsoft.lemonbubble;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
@@ -199,6 +200,21 @@ public class LemonBubbleView {
         // 调用泡泡控件信息对象中的方法来计算面板和图标标题等控件的位置和大小，并动画移动
         info.calBubbleViewContentPanelFrame(_contentPanel);
         info.calPaintViewAndTitleViewFrame(_paintView, _titleView);
+    }
+
+    /**
+     * 判断制定的fragment当前是否被显示中
+     *
+     * @param fragment 要判断是否被显示的fragment
+     * @return 是否显示的布尔值
+     */
+    private boolean isFragmentShowing(Fragment fragment) {
+        if (!fragment.getUserVisibleHint())// ViewPager嵌套时还没有触发显示
+            return false;
+        if (fragment.isHidden())// 当前fragment被隐藏了
+            return false;
+
+        return true;
     }
 
     /**
