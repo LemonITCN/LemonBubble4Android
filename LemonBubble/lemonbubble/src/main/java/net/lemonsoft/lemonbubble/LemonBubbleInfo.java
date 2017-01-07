@@ -485,6 +485,16 @@ public class LemonBubbleInfo {
     }
 
     /**
+     * 展示这个泡泡控件，并且在指定的时间后关闭
+     *
+     * @param fragment      要判断是否处于显示状态的fragment
+     * @param autoCloseTime 自动关闭的时间
+     */
+    public void show(android.support.v4.app.Fragment fragment, int autoCloseTime) {
+        LemonBubble.showBubbleInfo(fragment, this, autoCloseTime);
+    }
+
+    /**
      * 展示这个跑酷控件
      *
      * @param context 要显示在哪个Activity
@@ -499,6 +509,15 @@ public class LemonBubbleInfo {
      * @param fragment 要判断是否处于显示状态的fragment
      */
     public void show(Fragment fragment) {
+        LemonBubble.showBubbleInfo(fragment, this);
+    }
+
+    /**
+     * 展示这个跑酷控件
+     *
+     * @param fragment 要判断是否处于显示状态的fragment
+     */
+    public void show(android.support.v4.app.Fragment fragment) {
         LemonBubble.showBubbleInfo(fragment, this);
     }
 

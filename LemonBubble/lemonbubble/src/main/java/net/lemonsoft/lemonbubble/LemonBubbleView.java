@@ -208,6 +208,22 @@ public class LemonBubbleView {
      * @param fragment 要判断是否被显示的fragment
      * @return 是否显示的布尔值
      */
+    private boolean isFragmentShowing(android.support.v4.app.Fragment fragment) {
+        if (!fragment.getUserVisibleHint())// ViewPager嵌套时还没有触发显示
+            return false;
+        if (fragment.isHidden())// 当前fragment被隐藏了
+            return false;
+        if (fragment.getActivity() == null)
+            return false;
+        return true;
+    }
+
+    /**
+     * 判断制定的fragment当前是否被显示中
+     *
+     * @param fragment 要判断是否被显示的fragment
+     * @return 是否显示的布尔值
+     */
     private boolean isFragmentShowing(Fragment fragment) {
         if (!fragment.getUserVisibleHint())// ViewPager嵌套时还没有触发显示
             return false;
@@ -230,6 +246,17 @@ public class LemonBubbleView {
     }
 
     /**
+     * 检测指定的fragment是否处于显示状态，如果是的话那么展示泡泡控件
+     *
+     * @param fragment   要判断是否显示的fragment
+     * @param bubbleInfo 泡泡信息对象
+     */
+    public void showBubbleInfo(android.support.v4.app.Fragment fragment, LemonBubbleInfo bubbleInfo) {
+        if (isFragmentShowing(fragment))
+            showBubbleInfo(fragment.getActivity(), bubbleInfo);
+    }
+
+    /**
      * 检测指定的fragment是否处于显示状态，如果是的话那么展示泡泡控件，并在指定的时间后关闭
      *
      * @param fragment      要判断是否显示的fragment
@@ -238,7 +265,19 @@ public class LemonBubbleView {
      */
     public void showBubbleInfo(Fragment fragment, LemonBubbleInfo bubbleInfo, int autoCloseTime) {
         if (isFragmentShowing(fragment))
-            showBubbleInfo(fragment, bubbleInfo, autoCloseTime);
+            showBubbleInfo(fragment.getActivity(), bubbleInfo, autoCloseTime);
+    }
+
+    /**
+     * 检测指定的fragment是否处于显示状态，如果是的话那么展示泡泡控件，并在指定的时间后关闭
+     *
+     * @param fragment      要判断是否显示的fragment
+     * @param bubbleInfo    泡泡信息对象
+     * @param autoCloseTime 自动关闭的时间
+     */
+    public void showBubbleInfo(android.support.v4.app.Fragment fragment, LemonBubbleInfo bubbleInfo, int autoCloseTime) {
+        if (isFragmentShowing(fragment))
+            showBubbleInfo(fragment.getActivity(), bubbleInfo, autoCloseTime);
     }
 
     /**
