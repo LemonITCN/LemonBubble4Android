@@ -1,5 +1,6 @@
 package net.lemonsoft.lemonbubble;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -474,12 +475,31 @@ public class LemonBubbleInfo {
     }
 
     /**
+     * 展示这个泡泡控件，并且在指定的时间后关闭
+     *
+     * @param fragment      要判断是否处于显示状态的fragment
+     * @param autoCloseTime 自动关闭的时间
+     */
+    public void show(Fragment fragment, int autoCloseTime) {
+        LemonBubble.showBubbleInfo(fragment, this, autoCloseTime);
+    }
+
+    /**
      * 展示这个跑酷控件
      *
      * @param context 要显示在哪个Activity
      */
     public void show(Context context) {
         LemonBubble.showBubbleInfo(context, this);
+    }
+
+    /**
+     * 展示这个跑酷控件
+     *
+     * @param fragment 要判断是否处于显示状态的fragment
+     */
+    public void show(Fragment fragment) {
+        LemonBubble.showBubbleInfo(fragment, this);
     }
 
 }

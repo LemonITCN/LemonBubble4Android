@@ -1,5 +1,6 @@
 package net.lemonsoft.lemonbubble;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -75,6 +76,18 @@ public class LemonBubble {
     }
 
     /**
+     * 展示一个对号的泡泡控件
+     *
+     * @param fragment 要判断是否处于显示状态的fragment
+     * @param title    显示的标题
+     */
+    public static void showRight(Fragment fragment, String title) {
+        LemonBubbleInfo bubbleInfo = getRightBubbleInfo();
+        bubbleInfo.setTitle(title);
+        LemonBubbleView.defaultBubbleView().showBubbleInfo(fragment, bubbleInfo);
+    }
+
+    /**
      * 展示一个对号的泡泡控件，并在指定的时间后关闭
      *
      * @param context       上下文对象
@@ -85,6 +98,19 @@ public class LemonBubble {
         LemonBubbleInfo bubbleInfo = getRightBubbleInfo();
         bubbleInfo.setTitle(title);
         LemonBubbleView.defaultBubbleView().showBubbleInfo(context, bubbleInfo, autoCloseTime);
+    }
+
+    /**
+     * 展示一个对号的泡泡控件，并在指定的时间后关闭
+     *
+     * @param fragment      要判断是否处于显示状态的fragment
+     * @param title         显示的标题
+     * @param autoCloseTime 自动关闭的时间，单位ms
+     */
+    public static void showRight(Fragment fragment, String title, int autoCloseTime) {
+        LemonBubbleInfo bubbleInfo = getRightBubbleInfo();
+        bubbleInfo.setTitle(title);
+        LemonBubbleView.defaultBubbleView().showBubbleInfo(fragment, bubbleInfo, autoCloseTime);
     }
 
     /**
@@ -150,6 +176,18 @@ public class LemonBubble {
     /**
      * 展示一个叉号的带有错误提示的泡泡控件
      *
+     * @param fragment 要判断是否处于显示状态的fragment
+     * @param title    显示的标题
+     */
+    public static void showError(Fragment fragment, String title) {
+        LemonBubbleInfo bubbleInfo = getErrorBubbleInfo();
+        bubbleInfo.setTitle(title);
+        LemonBubbleView.defaultBubbleView().showBubbleInfo(fragment, bubbleInfo);
+    }
+
+    /**
+     * 展示一个叉号的带有错误提示的泡泡控件
+     *
      * @param context       上下文对象
      * @param title         显示的标题
      * @param autoCloseTime 自动关闭的时间，单位ms
@@ -158,6 +196,19 @@ public class LemonBubble {
         LemonBubbleInfo bubbleInfo = getErrorBubbleInfo();
         bubbleInfo.setTitle(title);
         LemonBubbleView.defaultBubbleView().showBubbleInfo(context, bubbleInfo, autoCloseTime);
+    }
+
+    /**
+     * 展示一个叉号的带有错误提示的泡泡控件
+     *
+     * @param fragment      要判断是否处于显示状态的fragment
+     * @param title         显示的标题
+     * @param autoCloseTime 自动关闭的时间，单位ms
+     */
+    public static void showError(Fragment fragment, String title, int autoCloseTime) {
+        LemonBubbleInfo bubbleInfo = getErrorBubbleInfo();
+        bubbleInfo.setTitle(title);
+        LemonBubbleView.defaultBubbleView().showBubbleInfo(fragment, bubbleInfo, autoCloseTime);
     }
 
     /**
@@ -212,6 +263,17 @@ public class LemonBubble {
     }
 
     /**
+     * 获取展示一个无限循环转动的等待提示的泡泡控件
+     *
+     * @return 带有无限循环转动的等待提示信息的泡泡信息对象
+     */
+    public static void showRoundProgress(Fragment fragment, String title) {
+        LemonBubbleInfo bubbleInfo = getRoundProgressBubbleInfo();
+        bubbleInfo.setTitle(title);
+        LemonBubbleView.defaultBubbleView().showBubbleInfo(fragment, bubbleInfo);
+    }
+
+    /**
      * 展示泡泡控件
      *
      * @param context    上下文对象
@@ -219,6 +281,16 @@ public class LemonBubble {
      */
     public static void showBubbleInfo(Context context, LemonBubbleInfo bubbleInfo) {
         LemonBubbleView.defaultBubbleView().showBubbleInfo(context, bubbleInfo);
+    }
+
+    /**
+     * 展示泡泡控件
+     *
+     * @param fragment   要判断是否处于显示状态的fragment
+     * @param bubbleInfo 泡泡信息描述对象
+     */
+    public static void showBubbleInfo(Fragment fragment, LemonBubbleInfo bubbleInfo) {
+        LemonBubbleView.defaultBubbleView().showBubbleInfo(fragment, bubbleInfo);
     }
 
     /**
@@ -230,6 +302,17 @@ public class LemonBubble {
      */
     public static void showBubbleInfo(Context context, LemonBubbleInfo bubbleInfo, int autoCloseTime) {
         LemonBubbleView.defaultBubbleView().showBubbleInfo(context, bubbleInfo, autoCloseTime);
+    }
+
+    /**
+     * 展示泡泡控件并在指定的时间后关闭
+     *
+     * @param fragment      要判断是否处于显示状态的fragment
+     * @param bubbleInfo    泡泡信息描述对象
+     * @param autoCloseTime 自动关闭的时间
+     */
+    public static void showBubbleInfo(Fragment fragment, LemonBubbleInfo bubbleInfo, int autoCloseTime) {
+        LemonBubbleView.defaultBubbleView().showBubbleInfo(fragment, bubbleInfo, autoCloseTime);
     }
 
     /**
