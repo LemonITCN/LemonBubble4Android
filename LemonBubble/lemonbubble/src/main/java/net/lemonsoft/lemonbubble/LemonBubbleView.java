@@ -136,7 +136,8 @@ public class LemonBubbleView {
         _backMaskView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _currentBubbleInfo.getOnMaskTouchContext().onTouch(_currentBubbleInfo, LemonBubbleView.this);
+                if (_currentBubbleInfo.getOnMaskTouchContext() != null)
+                    _currentBubbleInfo.getOnMaskTouchContext().onTouch(_currentBubbleInfo, LemonBubbleView.this);
             }
         });
         // 设置全屏宽
