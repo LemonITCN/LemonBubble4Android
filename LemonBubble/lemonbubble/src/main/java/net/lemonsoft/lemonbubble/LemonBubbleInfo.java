@@ -3,7 +3,6 @@ package net.lemonsoft.lemonbubble;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 
 import net.lemonsoft.lemonbubble.enums.LemonBubbleLayoutStyle;
 import net.lemonsoft.lemonbubble.enums.LemonBubbleLocationStyle;
+import net.lemonsoft.lemonbubble.interfaces.LemonBubbleMaskOnTouchContext;
 import net.lemonsoft.lemonbubble.interfaces.LemonBubblePaintContext;
 import net.lemonsoft.lemonbubble.interfaces.LemonBubbleProgressModePaintContext;
 
@@ -116,6 +116,10 @@ public class LemonBubbleInfo {
      * 标题字体大小
      */
     private int titleFontSize = LemonBubbleGlobal.titleFontSize;
+    /**
+     * 蒙版被点击的回调
+     */
+    private LemonBubbleMaskOnTouchContext onMaskTouchContext = LemonBubbleGlobal.onMaskTouchContext;
 
     public String getTitle() {
         return title;
@@ -318,6 +322,15 @@ public class LemonBubbleInfo {
 
     public LemonBubbleInfo setTitleFontSize(int titleFontSize) {
         this.titleFontSize = titleFontSize;
+        return this;
+    }
+
+    public LemonBubbleMaskOnTouchContext getOnMaskTouchContext() {
+        return onMaskTouchContext;
+    }
+
+    public LemonBubbleInfo setOnMaskTouchContext(LemonBubbleMaskOnTouchContext onMaskTouchContext) {
+        this.onMaskTouchContext = onMaskTouchContext;
         return this;
     }
 

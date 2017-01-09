@@ -133,6 +133,12 @@ public class LemonBubbleView {
     private void initCommonView() {
         // 实例化灰色半透明蒙版控件
         _backMaskView = new View(_context);
+        _backMaskView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _currentBubbleInfo.getOnMaskTouchContext().onTouch(_currentBubbleInfo, LemonBubbleView.this);
+            }
+        });
         // 设置全屏宽
         _backMaskView.setLayoutParams(new RelativeLayout.LayoutParams(_PST.dpToPx(_PST.screenWidthDp()), _PST.dpToPx(_PST.screenHeightDp())));
         _rootLayout.setAlpha(0);// 设置全透明，也就是默认不可见，后期通过动画改变来显示

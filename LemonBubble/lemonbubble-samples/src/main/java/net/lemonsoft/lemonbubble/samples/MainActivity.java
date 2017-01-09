@@ -12,12 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import net.lemonsoft.lemonbubble.LemonBubble;
 import net.lemonsoft.lemonbubble.LemonBubbleInfo;
 import net.lemonsoft.lemonbubble.LemonBubbleView;
 import net.lemonsoft.lemonbubble.enums.LemonBubbleLayoutStyle;
 import net.lemonsoft.lemonbubble.enums.LemonBubbleLocationStyle;
+import net.lemonsoft.lemonbubble.interfaces.LemonBubbleMaskOnTouchContext;
 import net.lemonsoft.lemonbubble.interfaces.LemonBubblePaintContext;
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class MainActivity extends Activity {
     private LinearLayout button4;
     private LinearLayout button5;
     private LinearLayout button6;
+    private LinearLayout button7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class MainActivity extends Activity {
         button4 = (LinearLayout) findViewById(R.id.btn4);
         button5 = (LinearLayout) findViewById(R.id.btn5);
         button6 = (LinearLayout) findViewById(R.id.btn6);
+        button7 = (LinearLayout) findViewById(R.id.btn7);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +143,23 @@ public class MainActivity extends Activity {
                 LemonBubble.showBubbleInfo(MainActivity.this, iconInfo, 2000);
             }
         });
+
+        button7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LemonBubble.getRoundProgressBubbleInfo()
+                        .setTitle("无限请求中...")
+                        .setOnMaskTouchContext(new LemonBubbleMaskOnTouchContext() {
+                            @Override
+                            public void onTouch(LemonBubbleInfo bubbleInfo, LemonBubbleView bubbleView) {
+                                bubbleView.hide();
+                                Toast.makeText(getApplicationContext(), "您终止圆形了等待框~", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .show(MainActivity.this);
+            }
+        });
+
     }
 
 }

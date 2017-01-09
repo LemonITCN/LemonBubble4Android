@@ -5,6 +5,7 @@ import android.graphics.Color;
 
 import net.lemonsoft.lemonbubble.enums.LemonBubbleLayoutStyle;
 import net.lemonsoft.lemonbubble.enums.LemonBubbleLocationStyle;
+import net.lemonsoft.lemonbubble.interfaces.LemonBubbleMaskOnTouchContext;
 import net.lemonsoft.lemonbubble.interfaces.LemonBubblePaintContext;
 import net.lemonsoft.lemonbubble.interfaces.LemonBubbleProgressModePaintContext;
 
@@ -106,6 +107,10 @@ public class LemonBubbleGlobal {
      * 标题字体大小
      */
     public static int titleFontSize = 11;
+    /**
+     * 蒙版被点击的回调
+     */
+    public static LemonBubbleMaskOnTouchContext onMaskTouchContext = null;
 
 
     /**
