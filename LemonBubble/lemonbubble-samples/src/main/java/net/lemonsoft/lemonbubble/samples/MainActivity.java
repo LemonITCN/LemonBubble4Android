@@ -147,17 +147,17 @@ public class MainActivity extends Activity {
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                LemonBubble.getRoundProgressBubbleInfo()
-//                        .setTitle("无限请求中...")
-//                        .setOnMaskTouchContext(new LemonBubbleMaskOnTouchContext() {
-//                            @Override
-//                            public void onTouch(LemonBubbleInfo bubbleInfo, LemonBubbleView bubbleView) {
-//                                bubbleView.hide();
-//                                Toast.makeText(getApplicationContext(), "您终止圆形了等待框~", Toast.LENGTH_LONG).show();
-//                            }
-//                        })
-//                        .show(MainActivity.this);
-                startActivity(new Intent().setClass(MainActivity.this, TestActivity.class));
+                LemonBubble.getRoundProgressBubbleInfo()
+                        .setTitle("无限请求中...")
+                        .setOnMaskTouchContext(new LemonBubbleMaskOnTouchContext() {
+                            @Override
+                            public void onTouch(LemonBubbleInfo bubbleInfo, LemonBubbleView bubbleView) {
+                                bubbleView.hide();
+                                Toast.makeText(getApplicationContext(), "您终止圆形了等待框~", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .show(MainActivity.this);
+//                startActivity(new Intent().setClass(MainActivity.this, TestActivity.class));
             }
         });
 
