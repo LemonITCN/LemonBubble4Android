@@ -348,4 +348,12 @@ public class LemonBubbleView {
         }, 300);// 待所有动画处理完毕后关闭根Dialog
     }
 
+    /**
+     * 强制关闭当前正在显示的泡泡控件
+     */
+    public void forceHide() {
+        _container.dismiss();
+        this.haveInit = false;
+    }
+
 }

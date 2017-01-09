@@ -404,5 +404,12 @@ public class LemonBubble {
         LemonBubbleView.defaultBubbleView().hide();
     }
 
+    /**
+     * 强制关闭当前正在显示的泡泡控件
+     */
+    public static void forceHide() {
+        LemonBubbleView.defaultBubbleView().forceHide();
+    }
+
 }
 
