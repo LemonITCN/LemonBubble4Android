@@ -1,26 +1,14 @@
 # LemonBubble4Android
 > 作者：1em0nsOft - LiuRi
 >
-> 版本号：1.0.6
+> 版本号：1.0.8
 >
 > 简介：这是一个完全Made in China的炫酷弹出指示层Android版本（-_-#意思就是还有iOS的），他能让你快速的自定义任何样式的弹出框。
 
 > 最新更新记录：
 >
-> 支持显示LemonBubble的时候设置背景蒙版的触摸事件啦，比如说，你在一个长时间网络请求的时候，你可以设置背景蒙版点击事件来终止网络请求并关闭对话框哦~具体咋用，不妨劳烦您大驾看看Demo。
+> 修复了在前一个Activity中的LemonBubble未关闭，在新的Activity中无法显示LemonBubble的bug
 >
-> ```java
-> LemonBubble.getRoundProgressBubbleInfo()
->        .setTitle("无限请求中...")
->        .setOnMaskTouchContext(new LemonBubbleMaskOnTouchContext() {
->            @Override
->            public void onTouch(LemonBubbleInfo bubbleInfo, LemonBubbleView bubbleView) {
->                bubbleView.hide();
->                Toast.makeText(getApplicationContext(), "您终止圆形了等待框~", Toast.LENGTH_LONG).show();
->            }
->         })
->         .show(MainActivity.this); 
-> ```
 
 - 废话不多说，先看看图，来~
 
@@ -44,7 +32,7 @@ allprojects {
 dependencies {
     // ...  你的其他依赖
     // 然后加入下面这行
-    compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.6'
+    compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.8'
 }
 ```
 
