@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         button1 = (LinearLayout) findViewById(R.id.btn1);
         button2 = (LinearLayout) findViewById(R.id.btn2);
         button3 = (LinearLayout) findViewById(R.id.btn3);
@@ -162,5 +163,6 @@ public class MainActivity extends Activity {
         });
 
     }
+
 
 }

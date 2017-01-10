@@ -298,6 +298,8 @@ public class LemonBubbleView {
      * @param bubbleInfo 泡泡信息描述对象
      */
     public void showBubbleInfo(Context context, LemonBubbleInfo bubbleInfo) {
+        if (_context != null && !_context.equals(context))
+            haveInit = false;
         autoInit(context);
         _currentBubbleInfo = bubbleInfo;// 现将泡泡信息对象保存起来
         if (!isShow()) {// 如果已经显示，就不进行再弹出新的层
