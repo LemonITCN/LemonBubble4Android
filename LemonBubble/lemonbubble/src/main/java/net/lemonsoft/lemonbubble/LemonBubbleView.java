@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 public class LemonBubbleView {
 
-    //泡泡控件的实体控件容器
+    // 泡泡控件的实体控件容器
     private Dialog _container;
     // 整个dialog全屏的布局容器
     private RelativeLayout _rootLayout;
@@ -69,7 +69,7 @@ public class LemonBubbleView {
      *
      * @return 单例泡泡控件实例对象
      */
-    public static LemonBubbleView defaultBubbleView(Context context) {
+    public static synchronized LemonBubbleView defaultBubbleView(Context context) {
         if (_defaultBubbleViewObject == null)
             _defaultBubbleViewObject = new LemonBubbleView();
         return _defaultBubbleViewObject;
