@@ -120,6 +120,14 @@ public class LemonBubbleInfo {
      * 蒙版被点击的回调
      */
     private LemonBubbleMaskOnTouchContext onMaskTouchContext = LemonBubbleGlobal.onMaskTouchContext;
+    /**
+     * 是否显示状态栏
+     */
+    private boolean showStatusBar = LemonBubbleGlobal.showStatusBar;
+    /**
+     * 状态栏的颜色
+     */
+    private int statusBarColor = LemonBubbleGlobal.statusBarColor;
 
     public String getTitle() {
         return title;
@@ -331,6 +339,24 @@ public class LemonBubbleInfo {
 
     public LemonBubbleInfo setOnMaskTouchContext(LemonBubbleMaskOnTouchContext onMaskTouchContext) {
         this.onMaskTouchContext = onMaskTouchContext;
+        return this;
+    }
+
+    public boolean isShowStatusBar() {
+        return showStatusBar;
+    }
+
+    public LemonBubbleInfo setShowStatusBar(boolean showStatusBar) {
+        this.showStatusBar = showStatusBar;
+        return this;
+    }
+
+    public int getStatusBarColor() {
+        return statusBarColor;
+    }
+
+    public LemonBubbleInfo setStatusBarColor(int statusBarColor) {
+        this.statusBarColor = statusBarColor;
         return this;
     }
 

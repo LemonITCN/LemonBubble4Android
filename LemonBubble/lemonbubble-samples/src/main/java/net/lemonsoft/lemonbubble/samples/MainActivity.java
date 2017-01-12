@@ -57,6 +57,7 @@ public class MainActivity extends Activity {
                 LemonBubble.getRightBubbleInfo()// 增加无限点语法修改bubbleInfo的特性
                         .setTitle("这是一个成功的提示")
                         .setTitleFontSize(12)// 修改字体大小
+                        .setTitleColor(Color.RED)
                         .setMaskColor(Color.argb(100, 0, 0, 0))// 修改蒙版颜色
                         .show(MainActivity.this, 2000);
 //                LemonBubble.showRight(MainActivity.this, "这是一个成功的提示", 2000);

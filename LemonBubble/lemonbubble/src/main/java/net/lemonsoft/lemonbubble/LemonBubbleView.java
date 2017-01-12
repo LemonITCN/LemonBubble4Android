@@ -1,11 +1,11 @@
 package net.lemonsoft.lemonbubble;
 
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -106,7 +106,19 @@ public class LemonBubbleView {
      * 初始化容器与根视图布局
      */
     private void initContainerAndRootLayout() {
-        _container = new Dialog(_context, android.R.style.Theme_NoTitleBar);// 创建对话框对象并设置无标题栏主题
+        _container = new Dialog(// 判断是否有状态栏
+                _context,
+                _currentBubbleInfo.isShowStatusBar() ?
+                        android.R.style.Theme_NoTitleBar :
+                        android.R.style.Theme_NoTitleBar_Fullscreen
+        );// 创建对话框对象并设置无标题栏主题
+        if (_currentBubbleInfo.isShowStatusBar()) {
+            Window window = _container.getWindow();// 设置
+            if (window != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(_currentBubbleInfo.getStatusBarColor());
+            }
+        }
         _rootLayout = new RelativeLayout(_context);// 实例化根布局对象
         Window window = _container.getWindow();
         if (window == null) {// 检测是否成功获取window对象
@@ -300,8 +312,8 @@ public class LemonBubbleView {
     public void showBubbleInfo(Context context, LemonBubbleInfo bubbleInfo) {
         if (_context != null && !_context.equals(context))
             haveInit = false;
-        autoInit(context);
         _currentBubbleInfo = bubbleInfo;// 现将泡泡信息对象保存起来
+        autoInit(context);
         if (!isShow()) {// 如果已经显示，就不进行再弹出新的层
             _container.show();
         }

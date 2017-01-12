@@ -111,7 +111,14 @@ public class LemonBubbleGlobal {
      * 蒙版被点击的回调
      */
     public static LemonBubbleMaskOnTouchContext onMaskTouchContext = null;
-
+    /**
+     * 是否显示状态栏
+     */
+    public static boolean showStatusBar = true;
+    /**
+     * 状态栏的颜色
+     */
+    public static int statusBarColor = Color.BLACK;
 
     /**
      * 是否使用Fragment显示状态检测功能
