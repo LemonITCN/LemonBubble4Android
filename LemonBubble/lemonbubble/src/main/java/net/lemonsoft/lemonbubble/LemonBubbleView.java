@@ -214,6 +214,7 @@ public class LemonBubbleView {
         _PAT.setBackgroundColor(_contentPanel, info.getCornerRadius(), info.getBackgroundColor());
         // 设置内容面板的透明度为1，不透明
         _PAT.setAlpha(_contentPanel, 1);
+        _titleView.setTextColor(_currentBubbleInfo.getTitleColor());
         // 设置蒙版色
         _PAT.setBackgroundColor(_backMaskView, 0, info.getMaskColor());
         // 调用泡泡控件信息对象中的方法来计算面板和图标标题等控件的位置和大小，并动画移动
