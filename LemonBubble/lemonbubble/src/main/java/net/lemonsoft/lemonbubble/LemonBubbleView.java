@@ -95,7 +95,7 @@ public class LemonBubbleView {
     private void autoInit(Context context) {
         _context = context;
         _PST.setContext(context);// 初始化尺寸工具类
-        if (!haveInit) {// 暂时先关闭判断，因为这样可以防止控件
+        if (!haveInit) {
             initContainerAndRootLayout();// 初始化容器和根视图
             initCommonView();// 初始化公共的控件
             haveInit = true;
