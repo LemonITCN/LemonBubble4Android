@@ -1,10 +1,8 @@
 package net.lemonsoft.lemonbubble;
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.view.View;
 import android.widget.ImageView;
 
 /**
