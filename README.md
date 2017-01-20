@@ -110,3 +110,6 @@ LemonBubble.showBubbleInfo(this, myInfo, 2000);
 ![图片描述](https://raw.githubusercontent.com/1em0nsOft/LemonBubble4Android/master/Resource/example-run02.jpg)
 
 怎么样，是不是很简单？快来体验一下吧~
+
+
+
