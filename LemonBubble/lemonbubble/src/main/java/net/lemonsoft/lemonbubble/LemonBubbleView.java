@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.view.Gravity;
@@ -175,6 +176,7 @@ public class LemonBubbleView {
         _rootLayout.addView(_contentPanel);// 主内容面板
         _contentPanel.addView(_paintView);// 动画和帧图标显示控件放置到内容面板上
         _contentPanel.addView(_titleView);// 标题显示标签控件放置到内容面板上
+
     }
 
     /**

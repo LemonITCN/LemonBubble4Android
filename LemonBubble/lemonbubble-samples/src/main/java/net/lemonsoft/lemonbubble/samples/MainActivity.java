@@ -55,10 +55,9 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 LemonBubble.getRightBubbleInfo()// 增加无限点语法修改bubbleInfo的特性
-                        .setTitle("这是一个成功的提示")
+                        .setTitle("这是一个成功的提示，这是一个成功的提示")
                         .setTitleFontSize(12)// 修改字体大小
                         .setTitleColor(Color.RED)
-                        .setShowStatusBar(false)
                         .setMaskColor(Color.argb(100, 0, 0, 0))// 修改蒙版颜色
                         .show(MainActivity.this, 2000);
 //                LemonBubble.showRight(MainActivity.this, "这是一个成功的提示", 2000);
@@ -92,7 +91,7 @@ public class MainActivity extends Activity {
                 myInfo.setLocationStyle(LemonBubbleLocationStyle.BOTTOM);
                 myInfo.setLayoutStyle(LemonBubbleLayoutStyle.ICON_LEFT_TITLE_RIGHT);
                 myInfo.setTitle("正在删除");
-                myInfo.setTitleFontSize(20);
+                myInfo.setTitleFontSize(14);
                 myInfo.setBubbleSize(200, 50);
                 myInfo.setProportionOfDeviation(0.1f);
                 LemonBubble.showBubbleInfo(MainActivity.this, myInfo);
