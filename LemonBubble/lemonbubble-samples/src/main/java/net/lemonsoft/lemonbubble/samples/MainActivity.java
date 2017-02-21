@@ -19,9 +19,11 @@ import net.lemonsoft.lemonbubble.LemonBubbleInfo;
 import net.lemonsoft.lemonbubble.LemonBubbleView;
 import net.lemonsoft.lemonbubble.enums.LemonBubbleLayoutStyle;
 import net.lemonsoft.lemonbubble.enums.LemonBubbleLocationStyle;
+import net.lemonsoft.lemonbubble.interfaces.LemonBubbleLifeCycleDelegate;
 import net.lemonsoft.lemonbubble.interfaces.LemonBubbleMaskOnTouchContext;
 import net.lemonsoft.lemonbubble.interfaces.LemonBubblePaintContext;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -42,6 +44,32 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        LemonBubbleView.defaultBubbleView().setLifeCycleDelegate(new LemonBubbleLifeCycleDelegate.Adapter() {
+            @Override
+            public void willShow(LemonBubbleView bubbleView, LemonBubbleInfo bubbleInfo) {
+                super.willShow(bubbleView, bubbleInfo);
+                System.out.println("BUBBLE WILL SHOW~");
+            }
+
+            @Override
+            public void alreadyShow(LemonBubbleView bubbleView, LemonBubbleInfo bubbleInfo) {
+                super.alreadyShow(bubbleView, bubbleInfo);
+                System.out.println("BUBBLE ALREADY SHOW!");
+            }
+
+            @Override
+            public void willHide(LemonBubbleView bubbleView, LemonBubbleInfo bubbleInfo) {
+                super.willHide(bubbleView, bubbleInfo);
+                System.out.println("BUBBLE WILL HIDE~");
+            }
+
+            @Override
+            public void alreadyHide(LemonBubbleView bubbleView, LemonBubbleInfo bubbleInfo) {
+                super.alreadyHide(bubbleView, bubbleInfo);
+                System.out.println("BUBBLE ALREADY HIDE!");
+            }
+        });
 
         button1 = (LinearLayout) findViewById(R.id.btn1);
         button2 = (LinearLayout) findViewById(R.id.btn2);

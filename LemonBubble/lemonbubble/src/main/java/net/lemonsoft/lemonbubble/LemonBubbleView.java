@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.ImageFormat;
 import android.os.Build;
 import android.os.Handler;
 import android.view.Gravity;
@@ -15,6 +16,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import net.lemonsoft.lemonbubble.interfaces.LemonBubbleLifeCycleDelegate;
 
 /**
  * 柠檬泡泡控件
@@ -50,6 +53,10 @@ public class LemonBubbleView {
     private int _frameAnimationPlayIndex;
     // 帧动画播放指针切换动画器
     private ValueAnimator _framePlayIndexAnimator;
+    /**
+     * 生命周期代理，可以通过生命周期代理来处理一些提示框显示或消失等节点的特殊事件
+     */
+    private LemonBubbleLifeCycleDelegate lifeCycleDelegate;
 
     // 是否已经初始化过了，避免重新创建控件
     private boolean haveInit = false;
@@ -112,7 +119,14 @@ public class LemonBubbleView {
                 _currentBubbleInfo.isShowStatusBar() ?
                         android.R.style.Theme_NoTitleBar :
                         android.R.style.Theme_NoTitleBar_Fullscreen
-        );// 创建对话框对象并设置无标题栏主题
+        ) {
+            @Override
+            public void dismiss() {
+                super.dismiss();
+                if (lifeCycleDelegate != null)
+                    lifeCycleDelegate.alreadyHide(LemonBubbleView.this, _currentBubbleInfo);
+            }
+        };// 创建对话框对象并设置无标题栏主题
         if (_currentBubbleInfo.isShowStatusBar()) {
             Window window = _container.getWindow();// 设置
             if (window != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -313,6 +327,8 @@ public class LemonBubbleView {
      * @param bubbleInfo 泡泡信息描述对象
      */
     public void showBubbleInfo(Context context, LemonBubbleInfo bubbleInfo) {
+        if (lifeCycleDelegate != null)
+            lifeCycleDelegate.willShow(this, bubbleInfo);
         if (_context != null && !_context.equals(context))
             haveInit = false;
         _currentBubbleInfo = bubbleInfo;// 现将泡泡信息对象保存起来
@@ -321,6 +337,13 @@ public class LemonBubbleView {
             _container.show();
         }
         initContentPanel(bubbleInfo);// 根据泡泡信息对象对正文内容面板进行初始化
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (lifeCycleDelegate != null)
+                    lifeCycleDelegate.alreadyShow(LemonBubbleView.this, _currentBubbleInfo);
+            }
+        }, 300);// 300是动画播放duration的默认时间
     }
 
     /**
@@ -345,6 +368,8 @@ public class LemonBubbleView {
      * 隐藏当前正在显示的泡泡控件
      */
     public void hide() {
+        if (lifeCycleDelegate != null)
+            lifeCycleDelegate.willHide(this, _currentBubbleInfo);
         _PAT.setAlpha(_rootLayout, 0);// 动画设置根视图不透明
         _PAT.setAlpha(_contentPanel, 0);// 动画设置内容面板不透明
         _PAT.setSize(_contentPanel, 0, 0);// 动画设置面板的大小为0，0
@@ -373,4 +398,11 @@ public class LemonBubbleView {
         this.haveInit = false;
     }
 
+    public LemonBubbleLifeCycleDelegate getLifeCycleDelegate() {
+        return lifeCycleDelegate;
+    }
+
+    public void setLifeCycleDelegate(LemonBubbleLifeCycleDelegate lifeCycleDelegate) {
+        this.lifeCycleDelegate = lifeCycleDelegate;
+    }
 }
