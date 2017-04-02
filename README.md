@@ -48,7 +48,7 @@
 
 - 感觉怎么样呢？^_^ 光看图感觉到时还挺不错的，那怎么集成到项目中呢？来来，使用Gradle，首先在你的Project build.gradle文件中（allprojects ->repositories节点）加入如下代码：
 
-```
+``` gradle
 allprojects {
     repositories {
         jcenter()
@@ -60,7 +60,7 @@ allprojects {
 
 然后在你的Module（xxx e.g:app） build.gradle中（dependencies节点）加入如下代码：
 
-```
+``` gradle
 dependencies {
     // ...  你的其他依赖
     // 然后加入下面这行
@@ -72,7 +72,7 @@ dependencies {
 
 接下来，我们验证一下我们是否集成成功，随便找一个Activity，在onCreate方法里面我们加上如下一行代码：
 
-```
+``` java
 LemonBubble.showRight(this, "集成成功！", 2000);
 ```
 
@@ -82,7 +82,7 @@ LemonBubble.showRight(this, "集成成功！", 2000);
 
 LemonBubble默认自带了三种泡泡样式，带有一个绿色的对号的成功泡泡，带有一个红色X错号的错误泡泡，带有蓝色无限旋转的等待控件，你可以使用如下三种方式调用他们：
 
-```
+``` java
 LemonBubble.showRight(this, "成功啦！", 2000);
 LemonBubble.showError(this, "出错啦", 2000);
 LemonBubble.showRoundProgress(this, "等待中...");
@@ -92,7 +92,7 @@ LemonBubble.showRoundProgress(this, "等待中...");
 
 如果你想自定义样式的话，你只需要新建一个LemonBubbleInfo对象，然后对其进行修改属性即可，你也可以分别通过
 
-```
+``` java
 LemonBubble.getRightBubbleInfo()
 LemonBubble.getErrorBubbleInfo()
 LemonBubble.getRoundProgressBubbleInfo()
@@ -100,7 +100,7 @@ LemonBubble.getRoundProgressBubbleInfo()
 
 三个方法来获取我们预先为您写好的包含正确、错误、等待信息的LemonBubbleInfo对象，然后通过修改其属性的方式来快速自定义自己的泡泡控件，比如，我们现在通过如下代码自定义泡泡信息对象：
 
-```
+``` java
 // 获取默认的正确信息的泡泡信息对象
 LemonBubbleInfo myInfo = LemonBubble.getRightBubbleInfo();
 // 设置图标在左侧，标题在右侧
