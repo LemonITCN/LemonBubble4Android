@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LemonBubble.iml" filepath="$PROJECT_DIR$/LemonBubble.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LemonBubble.iml" filepath="$PROJECT_DIR$/LemonBubble.iml" />
       <module fileurl="file://$PROJECT_DIR$/lemonbubble/lemonbubble.iml" filepath="$PROJECT_DIR$/lemonbubble/lemonbubble.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lemonbubble/lemonbubble.iml" filepath="$PROJECT_DIR$/lemonbubble/lemonbubble.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lemonbubble-samples/lemonbubble-samples.iml" filepath="$PROJECT_DIR$/lemonbubble-samples/lemonbubble-samples.iml" />
       <module fileurl="file://$PROJECT_DIR$/lemonbubble-samples/lemonbubble-samples.iml" filepath="$PROJECT_DIR$/lemonbubble-samples/lemonbubble-samples.iml" />
     </modules>
   </component>

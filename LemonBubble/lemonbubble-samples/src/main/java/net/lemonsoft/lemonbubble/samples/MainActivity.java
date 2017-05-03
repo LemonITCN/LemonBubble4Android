@@ -6,6 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PathMeasure;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -189,6 +193,7 @@ public class MainActivity extends Activity {
                         })
                         .show(MainActivity.this);
 //                startActivity(new Intent().setClass(MainActivity.this, TestActivity.class));
+
             }
         });
 

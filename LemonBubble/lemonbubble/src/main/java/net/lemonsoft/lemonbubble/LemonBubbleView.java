@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -211,14 +212,17 @@ public class LemonBubbleView {
             _paintView.setImageBitmap(info.getIconArray().get(0));
         } else {
             // 逐帧连环动画
-            _framePlayIndexAnimator = ValueAnimator.ofInt(0, info.getIconArray().size() - 1);// 设置逐帧动画播放器的帧数范围为0 到为设置的图片数组中的元素数量 - 1
+            _framePlayIndexAnimator = ValueAnimator.ofInt(0, info.getIconArray().size());// 设置逐帧动画播放器的帧数范围为0 到为设置的图片数组中的元素数量 - 1
             _framePlayIndexAnimator.setDuration(info.getIconArray().size() * info.getFrameAnimationTime());// 设置逐帧动画播放时间为动画帧数 * 每帧的时间间隔
             _framePlayIndexAnimator.setRepeatCount(Integer.MAX_VALUE);// 设置重复次数为最大整数，为了不手动停止就一直循环
+            _framePlayIndexAnimator.setInterpolator(new LinearInterpolator());
             _framePlayIndexAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
+                    System.out.println(" - - - - " + animation.getAnimatedValue());
                     // 逐帧修改图片，启动连环动画的效果
-                    _paintView.setImageBitmap(info.getIconArray().get((int) (animation.getAnimatedValue())));
+                    if (((int) animation.getAnimatedValue()) < info.getIconArray().size())
+                        _paintView.setImageBitmap(info.getIconArray().get((Integer) animation.getAnimatedValue()));
                 }
             });
             // 启动动画执行器

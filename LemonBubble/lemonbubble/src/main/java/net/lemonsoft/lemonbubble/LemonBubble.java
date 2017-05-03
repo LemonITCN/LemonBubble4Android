@@ -282,6 +282,7 @@ public class LemonBubble {
                 int aimG = (info.getIconColor() & 0x0000ff00) >> 8;
                 int aimB = (info.getIconColor() & 0x000000ff);
                 Paint paint = new Paint();
+                paint.setAntiAlias(true);
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setColor(Color.argb((int) (aimA * 0.1), aimR, aimG, aimB));
                 paint.setStrokeWidth(8);
