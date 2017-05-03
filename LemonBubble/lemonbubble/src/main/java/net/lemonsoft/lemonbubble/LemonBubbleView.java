@@ -219,7 +219,6 @@ public class LemonBubbleView {
             _framePlayIndexAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    System.out.println(" - - - - " + animation.getAnimatedValue());
                     // 逐帧修改图片，启动连环动画的效果
                     if (((int) animation.getAnimatedValue()) < info.getIconArray().size())
                         _paintView.setImageBitmap(info.getIconArray().get((Integer) animation.getAnimatedValue()));
