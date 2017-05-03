@@ -1,7 +1,7 @@
 # LemonBubble4Android
 > 作者：1em0nsOft - LiuRi
 >
-> 版本号：1.0.12
+> 版本号：1.0.13
 >
 > 简介：这是一个完全Made in China的炫酷弹出指示层Android版本（-_-#意思就是还有iOS的），他能让你快速的自定义任何样式的弹出框。
 >
@@ -9,7 +9,9 @@
 
 > 最新更新记录：
 >
-> 捕捉了`LemonBubble.forceHide()`中的空指针异常，保证开发者在onDestroy中调用forceHide时候不会crash
+> 修复了逐帧动画的卡顿bug
+>
+> 对旋转动画的锯齿问题进行了修复
 
 - 废话不多说，先看看图，来~
 
@@ -33,7 +35,7 @@ allprojects {
 dependencies {
     // ...  你的其他依赖
     // 然后加入下面这行
-    compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.12'
+    compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.13'
 }
 ```
 
