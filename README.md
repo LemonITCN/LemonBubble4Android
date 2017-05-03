@@ -1,7 +1,7 @@
 # LemonBubble4Android
 > 作者：1em0nsOft - LiuRi
 >
-> 版本号：1.0.11
+> 版本号：1.0.12
 >
 > 简介：这是一个完全Made in China的炫酷弹出指示层Android版本（-_-#意思就是还有iOS的），他能让你快速的自定义任何样式的弹出框。
 >
@@ -9,38 +9,7 @@
 
 > 最新更新记录：
 >
-> LemonBubble支持生命周期代理啦，你想在LemonBubble的View显示完毕之后弹出一个Toast？还是你想再LemonBubble的View被关闭之后finish掉当前Activity？这回都可以在生命周期的代理类里面做咯~
->
-> 首先，我们需要拿到要添加生命周期代理类的LemonBubbleView对象，通常呢，我们用的都是默认的LemonBubbleView，那么我们这么做就可以`LemonBubbleView.defaultBubbleView()`，拿到View之后我们就可以设置自己的代理类啦，设置代理类的方法是：`setLifeCycleDelegate(LemonBubbleLifeCycleDelegate lifeCycleDelegate)`, 然后就可以在您自定义的代理类里面进行各种操作咯，下面是具体的代码：
->
-> ```java
-> LemonBubbleView.defaultBubbleView().setLifeCycleDelegate(new LemonBubbleLifeCycleDelegate.Adapter() {
->     @Override
->     public void willShow(LemonBubbleView bubbleView, LemonBubbleInfo bubbleInfo) {
->         super.willShow(bubbleView, bubbleInfo);
->         System.out.println("BUBBLE WILL SHOW~");
->     }
->     @Override
->     public void alreadyShow(LemonBubbleView bubbleView, LemonBubbleInfo bubbleInfo) {
->         super.alreadyShow(bubbleView, bubbleInfo);
->         System.out.println("BUBBLE ALREADY SHOW!");
->     }
->
->     @Override
->     public void willHide(LemonBubbleView bubbleView, LemonBubbleInfo bubbleInfo) {
->         super.willHide(bubbleView, bubbleInfo);
->         System.out.println("BUBBLE WILL HIDE~");
->     }
->
->     @Override
->     public void alreadyHide(LemonBubbleView bubbleView, LemonBubbleInfo bubbleInfo) {
->         super.alreadyHide(bubbleView, bubbleInfo);
->         System.out.println("BUBBLE ALREADY HIDE!");
->     }
-> });
-> ```
->
-> **另外，友情提示一下哦，LemonBubbleLifeCycleDelegate是接口，如果不想实现全部函数，那么只需要实现LemonBubbleLifeCycleDelegate.Adapter，然后override指定的方法就可以啦！**
+> 捕捉了`LemonBubble.forceHide()`中的空指针异常，保证开发者在onDestroy中调用forceHide时候不会crash
 
 - 废话不多说，先看看图，来~
 
@@ -64,7 +33,7 @@ allprojects {
 dependencies {
     // ...  你的其他依赖
     // 然后加入下面这行
-    compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.11'
+    compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.12'
 }
 ```
 

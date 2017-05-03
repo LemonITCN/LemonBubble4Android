@@ -398,7 +398,11 @@ public class LemonBubbleView {
      * 强制关闭当前正在显示的泡泡控件
      */
     public void forceHide() {
-        _container.dismiss();
+        try {
+            _container.dismiss();
+        } catch (NullPointerException e) {
+            System.err.println("未创建LemonBubble时调用了forceHide()，异常已经捕捉。");
+        }
         this.haveInit = false;
     }
 
